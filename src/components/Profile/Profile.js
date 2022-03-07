@@ -1,23 +1,51 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './style.scss'
 import $ from 'jquery'
 import copy from 'copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Button } from '../../globalStyles';
-import { niceAlert, deleteAlert } from '../../services/alerts';
+import { deleteAlert, errorNotification, infoNotification } from '../../services/alerts';
 import { useHistory } from 'react-router-dom';
-import { Modal } from '@mui/material';
+import Modal from '../Modals/ProfileColor'
+import { DeleteButton } from './ProfileStyles';
+import EditPassword from '../Modals/EditPassword';
+import { Button } from '@mui/material';
+import validator from 'validator';
+
 
 export default function Profile() {
+    const [openModal, setOpenModal] = useState(false)
+    const [changeName, setChangeName] = useState(false)
+    const [changeEmail, setChangeEmail] = useState(false)
+
+    // DB propertirs => get bgcolor and color from user
+    const [userBgColor, setUserBgColor] = useState('#969696')
+    const [userColor, setUserColor] = useState('#fff')
+    const [name, setName] = useState('Some user')
+    const [email, setEmail] = useState('user@gmail.com')
+    const [userId, setUserId] = useState('91u2dhjk2343e3d')
+    // const [userColor, setUserColor] = useState('')
+
+    const userName = useRef()
+    const inputName = useRef()
+    const changeNameBtn = useRef()
+    const userEmail = useRef()
+    const changeEmailBtn = useRef()
+    const inputEmail = useRef()
+
+    const picRef = useRef()
+
     const history = useHistory()
-    const eyeRef = useRef()
-    useEffect(()=>{
 
-    },[])
+  useEffect(()=>{
+		window.scrollTo(0, 0)
+  },[])
 
-    const changeColor = (element)=> {
-        document.body.style.background = element.value
+    const isEmailValid = (email) =>{
+    	return validator.isEmail(email)
+    }
+
+    const changeColorInDb = (element)=> { //todo
     }
 
     const deleteUser = async () =>{
@@ -26,26 +54,71 @@ export default function Profile() {
       history.push('/')
     }
 
+    const saveColor = () =>{
+      setUserBgColor(picRef.current.style.background)
+      setUserColor(picRef.current.style.color)
+    }
+
     const showId = ()=> {
         $(".wrapper").toggleClass("is-hidden");
         var inputType = $(".wrapper").hasClass("is-hidden") ? "password" : "text";
         setTimeout(function() {
-          const input = $("input").attr("type", inputType);
+          const input = $("#meeting-id").attr("type", inputType);
           if(inputType === "text"){
-              toast.info('Copied', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                });
+            infoNotification("Copied to clipboard","bottom-right")
+            console.log(input)
               copy(input[0].value)
           }
         }, 50);
       };
+
+      const editName = () =>{
+
+        setChangeName(!changeName)
+        inputName.current.style.display = ""
+        changeNameBtn.current.style.display = ""
+        inputName.current.value = userName.current.textContent
+        userName.current.style.display = "none"
+      }
+      
+      const closeEditName = () =>{
+
+        setChangeName(!changeName)
+        userName.current.textContent = inputName.current.value
+        inputName.current.style.display = "none"
+        userName.current.style.display = ""
+        changeNameBtn.current.style.display = "none"
+      }
+
+      const editEmail = () =>{
+        setChangeEmail(!changeEmail)
+        inputEmail.current.style.display = ""      //reveal input
+        changeEmailBtn.current.style.display = ""  //reveal button
+        inputEmail.current.value = userEmail.current.textContent //put in input the current email
+        userEmail.current.style.display = "none" //hide email address
+      }
+
+      const closeEditEmail = () =>{
+        setChangeEmail(!changeEmail)
+        inputEmail.current.style.display = "none"
+        userEmail.current.style.display = ""
+        changeEmailBtn.current.style.display = "none"
+        if(!isEmailValid(inputEmail.current.value)){
+          return errorNotification("Email is not valid","top-center")
+        }
+        userEmail.current.textContent = inputEmail.current.value
+      }
+
+      const updateName = () =>{ //todo
+        setName(userName.current.value)
+      }
+      const updateEmail = () =>{ //todo
+
+        setEmail(userEmail.current.value)
+      }
+
   return (
+    <>
     <div className="profile">
     <h1>Profile</h1>
     <ToastContainer
@@ -58,21 +131,24 @@ export default function Profile() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-    />
+        />
     <div className="wrapper-profile">
       <article className="content">
         <div className="row">
           <div className="left">
-            <Modal/>
-            <Modal/>
-            <Modal/>
-            <Modal/>
-            <div className="pic">
-              s
+            
+            <div onClick={()=>{
+              setOpenModal(!openModal)
+            }} onChange={()=>saveColor()} ref={picRef} className="pic" style={{zIndex:1,background: userBgColor,color: userColor,}}>
+            <Modal openModal={openModal} style={{height:'800px',width:'800px',zIndex:2}} />
             </div>
           </div>
-          <div className="middle">Sagi Golan</div>
-          <div className="right edit"><a href="/">Edit</a></div>
+          <div className="middle">
+            <span onChange={()=>updateName()} ref={userName} id="user-name">{name}</span>
+            <input style={{display:'none'}} ref={inputName} id="change-name-input" type="text" />
+            <Button style={{display:'none'}} ref={changeNameBtn} id="change-name-btn" onClick={()=>closeEditName()}>save</Button>
+          </div>
+          <div className="right edit"><a id="edit-link" onClick={()=>editName()} >Edit</a></div>
         </div>
 
         <div className="row">
@@ -82,7 +158,7 @@ export default function Profile() {
               <svg className="IconLock" viewBox="0 0 20 20">
                     <path d="m3,9v11h14V9M4,9V6c0-3.3 2.7-6 6-6c3.3,0 6,2.7 6,6v3H14V6c0-2.2-1.8-4-4-4-2.2,0-4,1.8-4,4v3"/>
                 </svg>
-              <input id="meeting-id" type="password" value="91u2dhjk2343e3d" disabled/>
+              <input id="meeting-id" type="password" value={userId} disabled/>
             
               <span onClick={()=>showId()} className="eye-wrapper">
             <svg className="eye" viewBox="0 0 41 35">
@@ -98,29 +174,35 @@ export default function Profile() {
 
         <div className="row">
           <div className="left">Sign-In Email</div>
-          <div className="middle">saking88@gmail.com</div>
-          <div className="right edit"><a href="/">Edit</a></div>
+          <div className="middle">
+            <span onChange={()=>updateEmail()} ref={userEmail} id="user-email" >saking88@gmail.com</span>
+            <input id="change-email-input" ref={inputEmail} style={{display:'none'}} type="text" />
+            <Button style={{display:'none'}} ref={changeEmailBtn} id="change-email-btn" onClick={()=>closeEditEmail()}>save</Button>
+          </div>
+          <div className="right edit"><a onClick={()=>editEmail()} >Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left">Password</div>
           <div className="middle pass">**********</div>
-          <div className="right edit"><a href="/">Edit</a></div>
+          <div className="right edit"><a><EditPassword></EditPassword></a></div>
         </div>
         
         <div className="row">
           <div className="left">License</div>
           <div className="middle">Basic - 100 participants</div>
-          <div className="right edit"><a href="/">Edit</a></div>
+          <div className="right edit"><a target="_blank" href="/pricing">Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left"></div>
-          <Button onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</Button>
+          <DeleteButton onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
           <div className="right edit"></div>
         </div>
       </article>
     </div>
   </div>
+  </>
+
   )
 }

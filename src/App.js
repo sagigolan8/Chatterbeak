@@ -15,8 +15,8 @@ import Report from './components/Report/Report';
 import SignIn from './components/SignIn/SignIn';
 import Safety from './components/Safety/Safety';
 import Feedback from './components/Feedback/Feedback';
-import AllServices from './components/AllServices/AllServices';
 import Profile from './components/Profile/Profile';
+// import Contact from './components/Contact/Contact'
 
 function App() {
 	return (
@@ -31,10 +31,11 @@ function App() {
 				<Route path="/policy" exact component={PrivacyPolicy} />
 				<Route path="/terms" exact component={Terms} />
 				<Route path="/disclaimer" exact component={Disclaimer} />
-				<Route path="/report" exact component={Report} />
+				{/* <Route path="/report" exact component={Report} /> */}
 				<Route path="/safety" exact component={Safety} />
 				<Route path="/feedback" exact component={Feedback} />
 				<Route path="/profile" exact component={Profile} />
+				{/* <Route path="/contact" exact component={Contact} /> */}
 			</Switch>
 			<Footer />
 		</Router>

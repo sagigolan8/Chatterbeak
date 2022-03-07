@@ -1,0 +1,65 @@
+.all {
+  position: relative;
+  font-family: "Lato", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+  border: 1px solid grey;
+  letter-spacing: normal;
+  font-size: 350%;
+  line-height: 20px;
+  border-radius: 14px;
+}
+#colorize-bg,
+#colorize-text {
+  cursor: pointer;
+}
+
+.edit-password-wrapper {
+  color: #fff;
+  padding: 10px 0;
+}
+
+.edit-password {
+  font-family: Verdana;
+  letter-spacing: 0.1825em;
+  box-shadow: 0 4px 8px rgb(14 37 80 / 85%);
+  background: #242424;
+  border-radius: 5px;
+  width: 230px;
+  padding: 10px 0;
+  color: #fff;
+  font-size: 16px;
+  @media screen and (max-width: 320px) {
+    font-size: 14px;
+    width: 200px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 11px;
+    width: 180px;
+  }
+}
+
+.check-password-wrapper {
+  position: relative;
+}
+
+.check-password-btn {
+  background: #101522 !important;
+  position: absolute;
+  left: 15%;
+  @media screen and (max-width: 320px) {
+    left: 8%;
+  }
+  @media screen and (max-width: 283px) {
+    left: 5%;
+  }
+}
+
+#new-password-input,
+#confirm-new-password-btn {
+  // visibility: hidden;
+  display: none;
+}

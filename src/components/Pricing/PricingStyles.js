@@ -108,7 +108,7 @@ color: #a9b3c1;
 export const PricingCardFeature = styled.li`
 margin-bottom: 1rem;
 display: flex;
-font-size: 0.937rem;
+font-size: 0.92rem;
 
 &:before {
 	content: '⚫';

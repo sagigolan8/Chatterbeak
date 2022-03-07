@@ -96,6 +96,8 @@ export const FormInputRow = styled.div`
 	}
 `;
 export const FormInput = styled.input`
+	// background: ${({background}) =>(background ? '#101522' : '')};
+	// box-shadow: ${({boxShadow})=>(boxShadow ? '0 6px 20px rgb(56 125 255 / 20%)' : '')};
 	display: block;
 	padding-left: 10px;
 	outline: none;

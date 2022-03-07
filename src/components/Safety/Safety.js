@@ -3,6 +3,7 @@ import { HeroFour } from '../../data/HeroData';
 import { Content } from '../Content/Content';
 import Features from '../Features/Features';
 import { SafetyData } from '../../data/FeaturesData';
+import { Modal } from '@mui/material';
 const Safety = () => {
 	useEffect(()=>{
 

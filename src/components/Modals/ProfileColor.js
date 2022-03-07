@@ -1,18 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
-// import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import { Checkbox } from '@mui/material';
-// import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
+import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
-import { IoMdRadioButtonOn } from 'react-icons/io';
+import './style.scss'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -40,7 +36,6 @@ const BootstrapDialogTitle = (props) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          {/* <CloseIcon /> */}
         <GrClose/>
         </IconButton>
       ) : null}
@@ -53,7 +48,12 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function Instructions() {
+export default function ColorModal({openModal}) {
+  React.useEffect(()=>{ 
+    if(openModal)
+    setOpen(openModal)
+  },[openModal])
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -63,40 +63,44 @@ export default function Instructions() {
     setOpen(false);
   };
 
+  const colorSelected = () => {
+    const bgColor = document.querySelector('#colorize-bg').value
+    const textColor = document.querySelector('#colorize-text').value
+    document.querySelector('.all').style.background = bgColor
+    document.querySelector('.all').style.color = textColor
+    document.querySelector('.pic').style.background = bgColor
+    document.querySelector('.pic').style.color = textColor
+}
+
   return (
     <div>
-      <IoMdRadioButtonOn/><Button variant="outlined" onClick={handleClickOpen}>
-      Instructions
-      </Button>
-      <BootstrapDialog
+      <span variant="outlined" onClick={handleClickOpen}>
+      S
+      </span>
+      <BootstrapDialog 
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Filter Instructions 
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
+          Pick your colors 
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            <Checkbox defaultChecked disabled></Checkbox>
-            Search Some Word <b>Without</b> Part Of Speech (<b>Or</b> Choose - None)  
-          </Typography>
-          <Typography gutterBottom>
-            <Checkbox defaultChecked disabled></Checkbox>
-            Search Some Word <b>By</b> Part Of Speech 
-          </Typography>
-          <Typography gutterBottom>
-            <Checkbox defaultChecked disabled></Checkbox>
-            Search Some Random Word <b>Only</b> By Part Of Speech 
-          </Typography>
-          <Typography gutterBottom>
-            <Checkbox defaultChecked disabled></Checkbox>
-            Click Any <b>Clickable</b> Word To See Definition 
-          </Typography>
+          <div>
+          background color - <input onChange={()=>colorSelected()} id="colorize-bg" type="color"/>
+        </div>
+          <div>
+          Text color - <input onChange={()=>colorSelected()} id="colorize-text"type="color"/>
+        </div>
          
         </DialogContent>
-        <DialogActions>
-          <Button style={{fontSize:'30px'}} autoFocus onClick={handleClose}>
+        <DialogActions >
+          <div className="all">
+            <div className="pic">
+              S
+            </div>
+          </div>
+          <Button style={{fontSize:'30px'}} onClick={handleClose}>
             ✔
           </Button>
         </DialogActions>

@@ -59,14 +59,14 @@ export const Content = ({
 						<TextWrapper>
 							<TopLine
 								initial={initial}
-								transition={{ delay: 0.3, duration: 0.4 }}
+								transition={{ delay: 0.3, duration: 0.5 }}
 								animate={animation}
 							>
 								{topLine.text}
 							</TopLine>
 							<Heading
 								initial={initial}
-								transition={{ delay: 0.5, duration: 0.4 }}
+								transition={{ delay: 0.5, duration: 0.5 }}
 								animate={animation}
 								inverse={inverse}
 							>
@@ -74,7 +74,7 @@ export const Content = ({
 							</Heading>
 							<Subtitle
 								initial={initial}
-								transition={{ delay: 0.7, duration: 0.4 }}
+								transition={{ delay: 0.7, duration: 0.5 }}
 								animate={animation}
 								inverse={inverse}
 							>
@@ -82,7 +82,7 @@ export const Content = ({
 							</Subtitle>
 							{/* <ContentButton
 								initial={initial}
-								transition={{ delay: 1, duration: 0.6 }}
+								transition={{ delay: 1, duration: 0.5 }}
 								animate={animation}
 								inverse={inverse}
 								primary={primary}
@@ -93,7 +93,7 @@ export const Content = ({
 					</ContentColumn>
 					<ContentColumn
 						initial={initial}
-						transition={{ delay: 0.5, duration: 0.4 }}
+						transition={{ delay: 0.5, duration: 0.5 }}
 						animate={animation}
 					>
 						<ImgWrapper>
