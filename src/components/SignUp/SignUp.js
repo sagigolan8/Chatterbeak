@@ -18,6 +18,7 @@ import { Container } from '../../globalStyles';
 import validateForm from './validateSignUp';
 import { Checkbox } from '@mui/material';
 import { Redirect } from 'react-router-dom';
+import { successNotification } from '../../services/alerts';
 const SignUp = () => {
 	const termsRef = useRef()
 
@@ -33,21 +34,18 @@ const SignUp = () => {
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
 
-	const handleSubmit = (e) => {
-		
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const resultError = validateForm({ name, email, password, confirmPass,terms }); //add terms
-
+		const resultError = await validateForm({ name, email, password, confirmPass,terms });	
 		if (resultError) {
 			return setError(resultError);
 		}
 		setTerms(!terms)
 		setName('');
-		// setEmail('');
 		setPassword('');
 		setConfirmPass('');
 		setError(null);
-		setSuccess('Application was submitted!');
+		setSuccess('success');
 	};
 
 	const messageVariants = {
@@ -56,18 +54,18 @@ const SignUp = () => {
 	};
 
 	const formData = [
-		{ label: 'Name', value: name, onChange: ({ target: { value } }) => setName(value), type: 'text' },
-		{ label: 'Email', value: email, onChange: ({ target: { value } }) => setEmail(value), type: 'email' },
+		{ label: 'Name', value: name, onChange1: ({ target: { value } }) => setName(value), type: 'text' },
+		{ label: 'Email', value: email, onChange1: ({ target: { value } }) => setEmail(value), type: 'email' },
 		{
 			label: 'Password',
 			value: password,
-			onChange: ({ target: { value } }) => setPassword(value),
+			onChange1: ({ target: { value } }) => setPassword(value),
 			type: 'password',
 		},
 		{
 			label: 'Confirm Password',
 			value: confirmPass,
-			onChange: ({ target: { value } }) => setConfirmPass(value),
+			onChange1: ({ target: { value } }) => setConfirmPass(value),
 			type: 'password',
 		},
 	];
@@ -85,7 +83,7 @@ const SignUp = () => {
 										type={el.type}
 										placeholder={`Enter ${el.label.toLocaleLowerCase()}`}
 										value={el.value}
-										onChange={el.onChange}
+										onChange={el.onChange1}
 									/>
 								</FormInputRow>
 							))}

@@ -13,13 +13,15 @@ import {
 	FormLink
 } from '../Form/FormStyles';
 import { Container } from '../../globalStyles';
-import validateForm from './validateSignUp';
-import { useLocation } from 'react-router-dom';
+import validateForm from './validateSignIn';
+import { Redirect, useLocation } from 'react-router-dom';
+import { niceAlert } from '../../services/alerts';
 const SignIn = () => {
 	const { state } = useLocation()
 	useEffect(()=>{
 		if(state){
 			setEmail(state.email)
+			niceAlert('Welcome to Chatterbeak!',2000,'success')
 		}
 		window.scrollTo(0, window.innerHeight*0.1)
 
@@ -30,18 +32,17 @@ const SignIn = () => {
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const resultError = validateForm({ name:'2', email, password, confirmPass:'' }); //add terms
+		const resultError = await validateForm({ email, password});
 
-		if (resultError !== null) {
-			setError(resultError);
-			return;
+		if (!resultError) {
+			return setError(resultError);
 		}
 		setEmail('');
 		setPassword('');
 		setError(null);
-		setSuccess('Application was submitted!');
+		setSuccess('success');
 	};
 
 	const messageVariants = {
@@ -97,6 +98,7 @@ const SignIn = () => {
 								animate="animate"
 							>
 								{success}
+								<Redirect to={{ pathname: "/meeting", state: { email }}} />
 							</FormMessage>
 						)}
 					</FormColumn>
