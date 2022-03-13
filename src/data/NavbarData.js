@@ -17,7 +17,7 @@ export const data = [
 	},
 
 	{
-		text: 'Join A Meeting',
+		text: 'Meeting',
 		to: '/meeting',
 	},
 	

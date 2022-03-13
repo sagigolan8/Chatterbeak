@@ -171,6 +171,10 @@ export const Button = styled.button`
 
 	}
 
+	&:focus{
+		border: 4px solid #00237cb8;
+	}
+
 	&:hover:before {
 		height: 500%;
 	}
