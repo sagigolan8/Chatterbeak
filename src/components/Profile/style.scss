@@ -45,9 +45,7 @@ body {
       align-items: center;
       width: 45%;
       padding: 40px 0;
-      // background: #969696;
       border-radius: 14px;
-      // color: #ffffff;
       letter-spacing: normal;
       font-size: 350%;
       line-height: 20px;
@@ -62,9 +60,6 @@ body {
         opacity: 0.4;
         cursor: pointer;
       }
-      //   &:before {
-      //     content: "";
-      //   }
       &:hover:before {
         position: absolute;
         top: 45%;
@@ -97,6 +92,7 @@ body {
 
 .delete-btn {
   &:hover {
+    transition: all 0.4s ease;
     color: #d50000 !important;
     border: 3px solid #b8000091;
     background: #0c0f1b;

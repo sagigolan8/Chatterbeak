@@ -1,30 +1,48 @@
-import React, { useEffect, useRef } from "react";
-import { niceAlert } from "../../services/alerts";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { infoNotification, niceAlert } from "../../services/alerts";
+import { UserContext } from "../Context/UserContext";
 import { FeedbackButton } from "./FeedbackStyles";
 import './style.css'
 
 export default function App() {
-    const textAreaRef = useRef()
-    useEffect(()=>{
+  const { user } = useContext(UserContext) 
+  const history = useHistory()
+  const textAreaRef = useRef()
+  const [allowEdit, setAllowEdit] = useState({pointerEvents: 'none'})
 
-		window.scrollTo(0, 0)
+    useEffect(()=>{
+      window.scrollTo(0, 0)
+      if(user.name){
+        setAllowEdit({pointerEvents: 'auto'})
+      }
+      else{
+        setAllowEdit({pointerEvents: 'none'})
+        infoNotification('In order to get access to our system you have to sign in','top-center')
+      }
+
 
 	},[])
+
+
 
     const checkRating = () =>{
       let rating 
         for (const item of document.querySelectorAll('.rates')) {
-            if(item.checked){
+            if(item.checked && textAreaRef.current.value){
                 rating = Number(item.id.slice(7));
                 console.log()
                 textAreaRef.current.value = ''
-                return niceAlert('Thank you!',2000,'success')
+                niceAlert('Thank you!',2000,'success')
+                return history.push('/')
             }
         }
-        return niceAlert('Please rate us')
+        return niceAlert('Please rate us, and fill all fields')
     }
   return (
 <>
+<ToastContainer/>
 <div className="container-feedback">
   <div className="feedback">
     <div className="rating">
@@ -128,8 +146,8 @@ export default function App() {
     </div>
   </div>
   <div className="feedback">
-    <textarea ref={textAreaRef} spellCheck="false" placeholder=" Leave your feedback here."></textarea>
-    <FeedbackButton onClick={()=>checkRating()}>Rate us!</FeedbackButton>
+    <textarea style={allowEdit} ref={textAreaRef} spellCheck="false" placeholder=" Leave your feedback here."></textarea>
+    <FeedbackButton style={allowEdit} onClick={()=>checkRating()}>Rate us!</FeedbackButton>
   </div>
 </div>
 </>

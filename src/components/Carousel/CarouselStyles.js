@@ -47,6 +47,7 @@ export const ReviewSlider = styled(Slider)`
 		display: flex;
 		padding: 30px;
 		gap: 3rem;
+		cursor: grabbing;
 	}
 	.slick-slide {
 		display: flex;

@@ -1,0 +1,106 @@
+.verification {
+  //   background: #f6f6f9;
+  //   padding: 4vw;
+  //   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #101522;
+  flex-direction: column;
+}
+
+.verification-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 1rem;
+  @media screen and (max-width: 406px) {
+    font-size: 25px;
+  }
+  @media screen and (max-width: 310px) {
+    font-size: 20px;
+  }
+}
+
+.verification-subheader {
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  @media screen and (max-width: 406px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 310px) {
+    font-size: 10px;
+  }
+}
+
+.verification-form {
+  box-shadow: 0 6px 20px #12127f63;
+  background: #242424;
+  color: white;
+  padding: 2rem;
+  border-radius: 4px;
+  max-width: 400px;
+
+  .input-form {
+    font-weight: 800;
+    display: block;
+    height: 50px;
+    margin-right: 0.5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    min-width: 0;
+    border: 1px solid white;
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px 2px #0804f34a;
+    @media screen and (max-width: 350px) {
+      height: 25px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.verification-wrapper {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  grid-column-gap: 5px;
+  margin-bottom: 20px;
+}
+
+.send-again-wrapper {
+  margin: 10px 0;
+  .send-again-link {
+    cursor: pointer;
+    border-top: 10px;
+    bottom: -15px;
+    position: absolute;
+    left: 32%;
+    text-decoration: none;
+    color: #0060ebd9;
+    font-weight: 500;
+    &:hover {
+      color: #4995cb;
+    }
+    @media screen and (max-width: 300px) {
+      font-size: 14px;
+    }
+  }
+}
+
+.form-btn {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  .otp-btn {
+    margin: 0px 10px;
+    @media screen and (max-width: 310px) {
+      font-size: 12px;
+    }
+    &:hover {
+      background: #fff;
+    }
+  }
+}

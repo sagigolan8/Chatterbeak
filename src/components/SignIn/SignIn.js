@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
 	FormColumn,
 	FormWrapper,
@@ -14,35 +14,38 @@ import {
 } from '../Form/FormStyles';
 import { Container } from '../../globalStyles';
 import validateForm from './validateSignIn';
-import { Redirect, useLocation } from 'react-router-dom';
-import { niceAlert } from '../../services/alerts';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { errorNotification, niceAlert } from '../../services/alerts';
+import { ToastContainer } from 'react-toastify';
+import { UserContext } from '../Context/UserContext';
 const SignIn = () => {
-	const { state } = useLocation()
+	const history = useHistory()
+    const { user, setUser } = useContext(UserContext) 
+	
 	useEffect(()=>{
-		if(state){
-			setEmail(state.email)
-			niceAlert('Welcome to Chatterbeak!',2000,'success')
-		}
 		window.scrollTo(0, window.innerHeight*0.1)
 
 	},[])
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState(null);
-	const [success, setSuccess] = useState(null);
+	// const [error, setError] = useState(null);
+	// const [success, setSuccess] = useState(null);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const resultError = await validateForm({ email, password});
+		const result = await validateForm({ email, password });
 
-		if (!resultError) {
-			return setError(resultError);
+		if (result.error) {
+			return errorNotification(result.error,'top-center')
 		}
-		setEmail('');
-		setPassword('');
-		setError(null);
-		setSuccess('success');
+		setUser(result)
+		niceAlert('enjoy our services',2000,'success')
+		history.push('/profile')
+		// setEmail('');
+		// setPassword('');
+		// setError(null);
+		// setSuccess('success');
 	};
 
 	const messageVariants = {
@@ -81,26 +84,7 @@ const SignIn = () => {
 							<FormLink to="/" >forgot password?</FormLink>
 							<FormButton type="submit">Sign In</FormButton>
 						</FormWrapper>
-						{error && (
-							<FormMessage
-								variants={messageVariants}
-								initial="hidden"
-								animate="animate"
-								error
-							>
-								{error}
-							</FormMessage>
-						)}
-						{success && (
-							<FormMessage
-								variants={messageVariants}
-								initial="hidden"
-								animate="animate"
-							>
-								{success}
-								<Redirect to={{ pathname: "/meeting", state: { email }}} />
-							</FormMessage>
-						)}
+							<ToastContainer/>
 					</FormColumn>
 				</FormRow>
 			</Container>

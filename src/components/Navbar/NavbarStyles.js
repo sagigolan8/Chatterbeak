@@ -122,7 +122,6 @@ export const NavItem = styled.li`
 	}
 
 	@media screen and (max-width: 1000px) {
-		
 		width: 100%;
 		padding: 0 0 2.2rem .5rem;
 		&:hover {

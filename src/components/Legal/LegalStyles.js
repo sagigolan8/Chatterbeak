@@ -11,7 +11,7 @@ export const LegalSection = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	color: #fff;
-	text-align: left;	
+	text-align: left;
 `;
 
 export const LegalHeading = styled.h1`

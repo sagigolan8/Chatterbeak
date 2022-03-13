@@ -1,29 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './style.scss'
 import $ from 'jquery'
 import copy from 'copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { deleteAlert, errorNotification, infoNotification } from '../../services/alerts';
+import { deleteAlert, errorNotification, infoNotification, niceAlert } from '../../services/alerts';
 import { useHistory } from 'react-router-dom';
 import Modal from '../Modals/ProfileColor'
 import { DeleteButton } from './ProfileStyles';
 import EditPassword from '../Modals/EditPassword';
 import { Button } from '@mui/material';
 import validator from 'validator';
+import { UserContext } from '../Context/UserContext';
+import { deleteProfile, updateProfile } from '../../services/request';
 
 
 export default function Profile() {
+    const { user, setUser } = useContext(UserContext) 
     const [openModal, setOpenModal] = useState(false)
     const [changeName, setChangeName] = useState(false)
     const [changeEmail, setChangeEmail] = useState(false)
-
+    const [allowEdit, setAllowEdit] = useState({pointerEvents: 'none'})
     // DB propertirs => get bgcolor and color from user
-    const [userBgColor, setUserBgColor] = useState('#969696')
-    const [userColor, setUserColor] = useState('#fff')
-    const [name, setName] = useState('Some user')
-    const [email, setEmail] = useState('user@gmail.com')
-    const [userId, setUserId] = useState('91u2dhjk2343e3d')
+    // const [userBgColor, setUserBgColor] = useState('#969696')
+    // const [userColor, setUserColor] = useState('#fff')
+    // const [name, setName] = useState('Some user')
+    // const [email, setEmail] = useState('user@gmail.com')
+    // const [userId, setUserId] = useState('91u2dhjk2343e3d')
     // const [userColor, setUserColor] = useState('')
 
     const userName = useRef()
@@ -38,6 +41,13 @@ export default function Profile() {
     const history = useHistory()
 
   useEffect(()=>{
+    if(user.name){
+      setAllowEdit({pointerEvents: 'auto'})
+    }
+    else{
+      setAllowEdit({pointerEvents: 'none'})
+      infoNotification('In order to get access to our system you have to sign in','top-center')
+    }
 		window.scrollTo(0, 0)
   },[])
 
@@ -45,18 +55,25 @@ export default function Profile() {
     	return validator.isEmail(email)
     }
 
-    const changeColorInDb = (element)=> { //todo
-    }
 
     const deleteUser = async () =>{
       const isDeleted = await deleteAlert('Are you sure you want to delete the account?')
-      if(isDeleted)
-      history.push('/')
+      if(isDeleted){
+        setUser({
+          name:'',
+          email:'',
+          password:'',
+          id:'',
+          bgColor:'#969696',
+          color:'#fff'
+      })
+        await deleteProfile(user.id)
+        history.push('/')
+      }
     }
 
-    const saveColor = () =>{
-      setUserBgColor(picRef.current.style.background)
-      setUserColor(picRef.current.style.color)
+    const changeColor = () =>{
+      setUser({...user, color: picRef.current.style.color, bgColor: picRef.current.style.background})
     }
 
     const showId = ()=> {
@@ -66,7 +83,6 @@ export default function Profile() {
           const input = $("#meeting-id").attr("type", inputType);
           if(inputType === "text"){
             infoNotification("Copied to clipboard","bottom-right")
-            console.log(input)
               copy(input[0].value)
           }
         }, 50);
@@ -82,7 +98,11 @@ export default function Profile() {
       }
       
       const closeEditName = () =>{
-
+        if(!/^[a-zA-Z]+ [a-zA-Z]+$/.test(inputName.current.value)){
+          return errorNotification('Please enter first name and last name','top-center')
+        }
+        updateProfile(user)
+        console.log('this',user)
         setChangeName(!changeName)
         userName.current.textContent = inputName.current.value
         inputName.current.style.display = "none"
@@ -99,22 +119,25 @@ export default function Profile() {
       }
 
       const closeEditEmail = () =>{
+        if(!isEmailValid(inputEmail.current.value)){
+          return errorNotification("Email is not valid","top-center")
+        }
+        updateProfile(user)
         setChangeEmail(!changeEmail)
         inputEmail.current.style.display = "none"
         userEmail.current.style.display = ""
         changeEmailBtn.current.style.display = "none"
-        if(!isEmailValid(inputEmail.current.value)){
-          return errorNotification("Email is not valid","top-center")
-        }
         userEmail.current.textContent = inputEmail.current.value
       }
 
       const updateName = () =>{ //todo
-        setName(userName.current.value)
+        // setName(userName.current.value)
+        setUser({...user, name: inputName.current.value})
       }
       const updateEmail = () =>{ //todo
 
-        setEmail(userEmail.current.value)
+        // setEmail(userEmail.current.value)
+        setUser({...user, email: inputEmail.current.value})
       }
 
   return (
@@ -136,29 +159,37 @@ export default function Profile() {
       <article className="content">
         <div className="row">
           <div className="left">
-            
             <div onClick={()=>{
               setOpenModal(!openModal)
-            }} onChange={()=>saveColor()} ref={picRef} className="pic" style={{zIndex:1,background: userBgColor,color: userColor,}}>
+              }} onChange={()=>changeColor()} 
+              ref={picRef} 
+              className="pic" 
+              style={
+                {
+                  zIndex:1,background: user.bgColor,
+                  color: user.color
+                  ,pointerEvents: allowEdit.pointerEvents
+                }}
+            >
             <Modal openModal={openModal} style={{height:'800px',width:'800px',zIndex:2}} />
             </div>
           </div>
           <div className="middle">
-            <span onChange={()=>updateName()} ref={userName} id="user-name">{name}</span>
-            <input style={{display:'none'}} ref={inputName} id="change-name-input" type="text" />
+            <span ref={userName} id="user-name">{user.name}</span>
+            <input onChange={()=>updateName()} style={{display:'none'}} ref={inputName} id="change-name-input" type="text" />
             <Button style={{display:'none'}} ref={changeNameBtn} id="change-name-btn" onClick={()=>closeEditName()}>save</Button>
           </div>
-          <div className="right edit"><a id="edit-link" onClick={()=>editName()} >Edit</a></div>
+          <div className="right edit"><a style={allowEdit} id="edit-link" onClick={()=>editName()} >Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left">Meeting ID</div>
           <div className="middle">
-            <div className="wrapper is-hidden">
+            <div style={allowEdit} className="wrapper is-hidden">
               <svg className="IconLock" viewBox="0 0 20 20">
                     <path d="m3,9v11h14V9M4,9V6c0-3.3 2.7-6 6-6c3.3,0 6,2.7 6,6v3H14V6c0-2.2-1.8-4-4-4-2.2,0-4,1.8-4,4v3"/>
                 </svg>
-              <input id="meeting-id" type="password" value={userId} disabled/>
+              <input  id="meeting-id" type="password" value={user.id} disabled/>
             
               <span onClick={()=>showId()} className="eye-wrapper">
             <svg className="eye" viewBox="0 0 41 35">
@@ -175,28 +206,28 @@ export default function Profile() {
         <div className="row">
           <div className="left">Sign-In Email</div>
           <div className="middle">
-            <span onChange={()=>updateEmail()} ref={userEmail} id="user-email" >saking88@gmail.com</span>
-            <input id="change-email-input" ref={inputEmail} style={{display:'none'}} type="text" />
+            <span ref={userEmail} id="user-email" >{user.email}</span>
+            <input onChange={()=>updateEmail()} id="change-email-input" ref={inputEmail} style={{display:'none'}} type="text" />
             <Button style={{display:'none'}} ref={changeEmailBtn} id="change-email-btn" onClick={()=>closeEditEmail()}>save</Button>
           </div>
-          <div className="right edit"><a onClick={()=>editEmail()} >Edit</a></div>
+          <div className="right edit"><a style={allowEdit} onClick={()=>editEmail()} >Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left">Password</div>
-          <div className="middle pass">**********</div>
-          <div className="right edit"><a><EditPassword></EditPassword></a></div>
+          <div className="middle pass" >**********</div>
+          <div className="right edit"><a style={allowEdit}><EditPassword></EditPassword></a></div>
         </div>
         
         <div className="row">
           <div className="left">License</div>
           <div className="middle">Basic - 100 participants</div>
-          <div className="right edit"><a target="_blank" href="/pricing">Edit</a></div>
+          <div className="right edit"><a style={allowEdit} target="_blank" href="/pricing">Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left"></div>
-          <DeleteButton onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
+          <DeleteButton style={allowEdit} onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
           <div className="right edit"></div>
         </div>
       </article>

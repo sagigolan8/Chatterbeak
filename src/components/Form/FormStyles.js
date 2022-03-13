@@ -10,10 +10,16 @@ export const FormSection = styled.div`
 `;
 
 export const FormTitle = styled.h1`
-	margin-bottom: 24px;
-	font-size: 48px;
+	margin-bottom: -20px;
+	font-size: 38px;
 	line-height: 1.1;
 	font-weight: 600;
+	@media screen and (max-width: 460px) {
+		margin-bottom: 20px;
+	}
+	@media screen and (max-width: 300px) {
+		font-size: 28px;
+	}
 `;
 
 export const FormContainer = styled.div`
@@ -80,6 +86,7 @@ export const FormMessage = styled(motion.div)`
 	padding: 5px;
 	text-align: center;
 	margin-top: 1rem;
+	font-weight: 500;
 `;
 
 export const FormInputRow = styled.div`
@@ -87,7 +94,8 @@ export const FormInputRow = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	align-items: stretch;
-	margin-bottom: 1.4rem;
+	// margin-bottom: 1.4rem;
+	margin-bottom: 0.7rem;
 
 	> p {
 		font-size: 0.8rem;
@@ -133,7 +141,7 @@ export const FormImg = styled.img`
 export const FormButton = styled.button`
 	border-radius: 4px;
 	background: none;
-	margin-top: 1.5rem;
+	margin-top: 0.6rem;
 	white-space: nowrap;
 	/* color: #fff; */
 	outline: none;

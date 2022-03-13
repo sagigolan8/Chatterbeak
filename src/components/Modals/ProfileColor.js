@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
+import { UserContext } from '../Context/UserContext';
+import { updateProfile } from '../../services/request';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -49,6 +51,10 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ColorModal({openModal}) {
+  
+  const { user, setUser } = React.useContext(UserContext) 
+
+
   React.useEffect(()=>{ 
     if(openModal)
     setOpen(openModal)
@@ -59,8 +65,9 @@ export default function ColorModal({openModal}) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = async () => {
     setOpen(false);
+    await updateProfile(user)
   };
 
   const colorSelected = () => {
@@ -75,7 +82,7 @@ export default function ColorModal({openModal}) {
   return (
     <div>
       <span variant="outlined" onClick={handleClickOpen}>
-      S
+      {user.name.charAt(0).toUpperCase()}
       </span>
       <BootstrapDialog 
         onClose={handleClose}
@@ -97,7 +104,7 @@ export default function ColorModal({openModal}) {
         <DialogActions >
           <div className="all">
             <div className="pic">
-              S
+            {user.name.charAt(0).toUpperCase()}
             </div>
           </div>
           <Button style={{fontSize:'30px'}} onClick={handleClose}>

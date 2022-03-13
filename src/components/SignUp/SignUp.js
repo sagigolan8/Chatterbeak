@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
 	FormColumn,
 	FormWrapper,
@@ -7,7 +7,6 @@ import {
 	FormRow,
 	FormLabel,
 	FormInputRow,
-	FormMessage,
 	FormButton,
 	FormTitle,
 	FormConfirmation,
@@ -18,35 +17,45 @@ import { Container } from '../../globalStyles';
 import validateForm from './validateSignUp';
 import { Checkbox } from '@mui/material';
 import { Redirect } from 'react-router-dom';
-import { successNotification } from '../../services/alerts';
+import { ToastContainer } from 'react-toastify';
+import { errorNotification } from '../../services/alerts';
+import { UserContext } from '../Context/UserContext';
+
 const SignUp = () => {
+    const { user, setUser } = useContext(UserContext) 
 	const termsRef = useRef()
 
 	useEffect(()=>{
 		window.scrollTo(0, window.innerHeight*0.1)
 	},[])
 
-	const [terms, setTerms] = useState('');
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [terms, setTerms] = useState('');
 	const [confirmPass, setConfirmPass] = useState('');
 	const [error, setError] = useState(null);
 	const [success, setSuccess] = useState(null);
 
+
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const resultError = await validateForm({ name, email, password, confirmPass,terms });	
+		const resultError = await validateForm({ name, email, password, confirmPass,terms});	
 		if (resultError) {
-			return setError(resultError);
+			return errorNotification(resultError,'top-center')
 		}
-		setTerms(!terms)
-		setName('');
-		setPassword('');
-		setConfirmPass('');
+		setUser({
+			...user,
+			name,
+			email,
+			password
+		  })
 		setError(null);
 		setSuccess('success');
 	};
+
+
 
 	const messageVariants = {
 		hidden: { y: 30, opacity: 0 },
@@ -54,18 +63,18 @@ const SignUp = () => {
 	};
 
 	const formData = [
-		{ label: 'Name', value: name, onChange1: ({ target: { value } }) => setName(value), type: 'text' },
-		{ label: 'Email', value: email, onChange1: ({ target: { value } }) => setEmail(value), type: 'email' },
+		{ label: 'Name', value: name, onChange: ({ target: { value } }) => setName(value), type: 'text' },
+		{ label: 'Email', value: email, onChange: ({ target: { value } }) => setEmail(value), type: 'email' },
 		{
 			label: 'Password',
 			value: password,
-			onChange1: ({ target: { value } }) => setPassword(value),
+			onChange: ({ target: { value } }) => setPassword(value),
 			type: 'password',
 		},
 		{
 			label: 'Confirm Password',
 			value: confirmPass,
-			onChange1: ({ target: { value } }) => setConfirmPass(value),
+			onChange: ({ target: { value } }) => setConfirmPass(value),
 			type: 'password',
 		},
 	];
@@ -83,7 +92,7 @@ const SignUp = () => {
 										type={el.type}
 										placeholder={`Enter ${el.label.toLocaleLowerCase()}`}
 										value={el.value}
-										onChange={el.onChange1}
+										onChange={el.onChange}
 									/>
 								</FormInputRow>
 							))}
@@ -99,26 +108,13 @@ const SignUp = () => {
 							</FormConfirmationWrapper>
 							<FormButton type="submit">Sign Up</FormButton>
 						</FormWrapper>
-						{error && (
-							<FormMessage
-								variants={messageVariants}
-								initial="hidden"
-								animate="animate"
-								error
-							>
-								{error}
-							</FormMessage>
-						)}
-						{success && (
-							<FormMessage
-								variants={messageVariants}
-								initial="hidden"
-								animate="animate"
-							>
-								{success}
-								<Redirect to={{ pathname: "/signin", state: { email }}} />
-							</FormMessage>
-						)}
+							{success && (
+								<>
+									{success}
+									<Redirect to={{ pathname: "/verification", state: { allowed: true }}} />	
+								</>
+							)}
+						<ToastContainer/>
 					</FormColumn>
 				</FormRow>
 			</Container>

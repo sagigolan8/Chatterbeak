@@ -4,14 +4,13 @@ const baseUrl = 'http://localhost:8080'
 
 ///move validateForm to server 
 export default async function validateForm({ name, email, password, confirmPass, terms }) {
-	const { data } = await axios.post(`${baseUrl}/user/signup`,{
+	const { data } = await axios.post(`${baseUrl}/signup`,{
 		name,
 		email,
 		password,
 		confirmPass,
 		terms
 	})
-	console.log(data)
 	return data 
 }
 

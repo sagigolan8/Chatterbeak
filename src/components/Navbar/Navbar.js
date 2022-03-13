@@ -16,14 +16,15 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { data } from '../../data/NavbarData';
 // import { animateScroll as scroll } from 'react-scroll';
 const Navbar = () => {
+	let history = useHistory();
 	const navRef = useRef()
 	const [inverse, setInverse] = useState(true)
 	const [inverseHover, setInverseHover] = useState(true)
 	const [linkActive, setLinkActive] = useState('')
 
 	useEffect(() => {
-		// if
 
+		// history.listen(()=>setCurrentUrl(history.location.pathname.slice(1)))
         const onScroll = () => displayNavBackground()
 
         window.addEventListener('scroll', onScroll);
@@ -33,8 +34,6 @@ const Navbar = () => {
 
 	const [show, setShow] = useState(false);
 
-	let history = useHistory();
-	let location = useLocation();
 
 	const handleClick = () => {
 		setShow(!show);
@@ -60,11 +59,15 @@ const Navbar = () => {
 	 */
 	const closeMobileMenu = (to, id,{ target: { parentElement } }) => {
 		removeFooterMarker()
-		if(linkActive)
-		linkActive.classList.remove('active-nav')
-		setLinkActive(parentElement)
-		parentElement.classList.add('active-nav')
 		history.push(to);
+		let location = history.location.pathname.slice(1)
+		location = location ? location : 'home'
+		if(location === parentElement.textContent.toLowerCase().replace(" ","")){
+			if(linkActive)
+			linkActive.classList.remove('active-nav')
+			setLinkActive(parentElement)
+			parentElement.classList.add('active-nav')
+		}
 		setShow(false);
 	};
 
