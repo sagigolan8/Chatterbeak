@@ -10,10 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
-import { FormWrapper } from '../Form/FormStyles';
-import { niceAlert, errorNotification, successNotification } from '../../services/alerts';
+import { errorNotification, successNotification } from '../../services/alerts';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { checkPassword, setNewPassword } from '../../services/request';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -57,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditPassword({openModal}) {
+export default function EditPassword({id}) {
   const oldPassword = React.useRef()
   const confirmPassword = React.useRef()
 
@@ -71,12 +71,13 @@ export default function EditPassword({openModal}) {
     setOpen(false);
   };
 
-  const checkPasswordFromDb = (password) =>{
-   return true 
-  }
+  // const checkPassword = (password) =>{
+  //  return false 
+  // }
 
-  const validateOldPassword = () =>{  //todo --> take password from db and compare
-    if(!checkPasswordFromDb(oldPassword.current.value)){
+  const validateOldPassword = async () =>{  //todo --> take password from db and compare
+    const isValidPassword = await checkPassword(id, oldPassword.current.value)
+    if(!isValidPassword){
       return errorNotification('Password incorrect',"top-center")
     }
     else{
@@ -99,6 +100,7 @@ export default function EditPassword({openModal}) {
       return errorNotification('Password are not match',"top-center")
     }
     else{
+      setNewPassword(id, newPassword.value)
       successNotification('Password changed!',"top-center")
       setChangePassword(false)
       setOpen(false)
@@ -120,13 +122,34 @@ export default function EditPassword({openModal}) {
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <div>
-            {/* here you write */}
+            Password
             </div>         
             <div className="edit-password-wrapper" >
-            <input ref={oldPassword} id="password-input" className="edit-password" type="password" placeholder="Enter password" />
+            <input 
+              onKeyDown={(e) => {
+                if(e.key === 'Enter'){
+                  !changePassword ? validateOldPassword() : validateNewPassword()
+                }
+              }} 
+              ref={oldPassword} 
+              id="password-input" 
+              className="edit-password" 
+              type="password" 
+              placeholder="Enter password" />
             </div>
             <div className="edit-password-wrapper">
-            <input ref={confirmPassword} style={{display:'none'}} id="confirm-password-input" className="edit-password" type="password" placeholder="Confirm password" />
+            <input 
+              onKeyDown={(e) => {
+                if(e.key === 'Enter'){
+                  !changePassword ? validateOldPassword() : validateNewPassword()
+                }
+              }} 
+              ref={confirmPassword} 
+              style={{display:'none'}} 
+              id="confirm-password-input" 
+              className="edit-password" 
+              type="password" 
+              placeholder="Confirm password" />
             </div>
             <div className="edit-password-wrapper">
             <Button 

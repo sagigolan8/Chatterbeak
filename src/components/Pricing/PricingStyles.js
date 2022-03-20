@@ -45,7 +45,7 @@ export const PricingContainer = styled.div`
 
 export const PricingCard = styled.div`
 	&:hover {
-		transform: scale(1.06);
+		transform: scale(1.12);
 		transition: all 0.3s ease-out;
 	}
 `;
@@ -85,6 +85,9 @@ export const PricingCardInfo = styled.div`
 export const PricingCardPlan = styled.h3`
 	margin-bottom: 5px;
 	font-size: 2rem;
+	@media screen and (max-width: 400px) {
+		font-size: 1.7rem;
+	}
 `;
 
 export const PricingCardCost = styled.h4`

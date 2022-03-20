@@ -50,18 +50,29 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function ColorModal({openModal,setOpenModal}) {
+export default function InfoModal({
+  openModal,
+  setOpenModal,
+  headline,
+  text,
+  icon,
+  inverse
+}) {
   
   const { user, setUser } = React.useContext(UserContext) 
-  // const theme = {background:'#101522',color:'#fff'}
-
+  const [open, setOpen] = React.useState(false);
+  const [theme, setTheme] = React.useState({border:'none'})
 
   React.useEffect(()=>{ 
-    if(openModal)
-    setOpen(openModal)
+    if(openModal){
+      setOpen(openModal)
+    }
+    if(inverse){
+      setTheme({background:'#242424',color:'#fff',border:'none'})
+    }
   },[openModal])
 
-  const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -81,39 +92,30 @@ export default function ColorModal({openModal,setOpenModal}) {
 }
 
   return (
-    <div>
+    <div> 
       <span variant="outlined" onClick={handleClickOpen}>
-      {user.name.charAt(0).toUpperCase()}
       </span>
-      <BootstrapDialog 
-      
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
-          Pick your colors 
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <div>
-          background color - <input onChange={()=>colorSelected()} id="colorize-bg" type="color"/>
-        </div>
-          <div>
-          Text color - <input onChange={()=>colorSelected()} id="colorize-text"type="color"/>
-        </div>
-         
-        </DialogContent>
-        <DialogActions >
-          <div className="all">
-            <div className="pic">
-            {user.name.charAt(0).toUpperCase()}
-            </div>
-          </div>
-          <Button style={{fontSize:'30px'}} onClick={handleClose}>
-            ✔
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+        <BootstrapDialog 
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          open={open}
+        >
+          <BootstrapDialogTitle style={theme} id="customized-dialog-title" onClose={handleClose} >
+          <span style={{position: 'absolute',top:'10px'}} >{icon}</span>
+          <span style={{fontSize:'1.6rem',fontWeight:'700',marginLeft:'65px'}}>{headline}</span>
+          </BootstrapDialogTitle>
+          <DialogContent style={theme} dividers>
+            <div>
+          <p style={{fontSize:'1.3rem',fontWeight:'500'}}>{text}</p>
+           </div>
+           
+          </DialogContent>
+          <DialogActions style={theme}>
+            <Button style={{fontSize:'30px'}} onClick={handleClose}>
+              ✔
+            </Button>
+          </DialogActions>
+        </BootstrapDialog>
     </div>
   );
 }

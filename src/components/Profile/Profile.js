@@ -48,7 +48,7 @@ export default function Profile() {
       setAllowEdit({pointerEvents: 'none'})
       infoNotification('In order to get access to our system you have to sign in','top-center')
     }
-		window.scrollTo(0, 0)
+		window.scrollTo(0, window.innerHeight*0.05)
   },[])
 
     const isEmailValid = (email) =>{
@@ -76,20 +76,20 @@ export default function Profile() {
       setUser({...user, color: picRef.current.style.color, bgColor: picRef.current.style.background})
     }
 
-    const showId = ()=> {
-        $(".wrapper").toggleClass("is-hidden");
-        var inputType = $(".wrapper").hasClass("is-hidden") ? "password" : "text";
+    const showId = async ()=> {
+      $(".wrapper").toggleClass("is-hidden");
+      var inputType = $(".wrapper").hasClass("is-hidden") ? "password" : "text";
+      const input = $("#meeting-id").attr("type", inputType);
+      copy(input[0].value)
+      copy(input[0].value)
         setTimeout(function() {
-          const input = $("#meeting-id").attr("type", inputType);
           if(inputType === "text"){
             infoNotification("Copied to clipboard","bottom-right")
-              copy(input[0].value)
           }
         }, 50);
       };
 
       const editName = () =>{
-
         setChangeName(!changeName)
         inputName.current.style.display = ""
         changeNameBtn.current.style.display = ""
@@ -142,7 +142,7 @@ export default function Profile() {
 
   return (
     <>
-    <div className="profile">
+    <div style={allowEdit} className="profile">
     <h1>Profile</h1>
     <ToastContainer
         position="top-right"
@@ -159,9 +159,9 @@ export default function Profile() {
       <article className="content">
         <div className="row">
           <div className="left">
-            <div onClick={()=>{
-              setOpenModal(!openModal)
-              }} onChange={()=>changeColor()} 
+            <div 
+              onClick={()=> setOpenModal(!openModal)}
+              onChange={()=>changeColor()} 
               ref={picRef} 
               className="pic" 
               style={
@@ -171,7 +171,7 @@ export default function Profile() {
                   ,pointerEvents: allowEdit.pointerEvents
                 }}
             >
-            <Modal openModal={openModal} style={{height:'800px',width:'800px',zIndex:2}} />
+            <Modal setOpenModal={setOpenModal} openModal={openModal} style={{height:'800px',width:'800px',zIndex:2}} />
             </div>
           </div>
           <div className="middle">
@@ -179,13 +179,13 @@ export default function Profile() {
             <input onChange={()=>updateName()} style={{display:'none'}} ref={inputName} id="change-name-input" type="text" />
             <Button style={{display:'none'}} ref={changeNameBtn} id="change-name-btn" onClick={()=>closeEditName()}>save</Button>
           </div>
-          <div className="right edit"><a style={allowEdit} id="edit-link" onClick={()=>editName()} >Edit</a></div>
+          <div className="right edit"><a  id="edit-link" onClick={()=>editName()} >Edit</a></div>
         </div>
 
         <div className="row">
-          <div className="left">Meeting ID</div>
+          <div className="left meeting-id-div">Meeting ID</div>
           <div className="middle">
-            <div style={allowEdit} className="wrapper is-hidden">
+            <div  className="wrapper is-hidden">
               <svg className="IconLock" viewBox="0 0 20 20">
                     <path d="m3,9v11h14V9M4,9V6c0-3.3 2.7-6 6-6c3.3,0 6,2.7 6,6v3H14V6c0-2.2-1.8-4-4-4-2.2,0-4,1.8-4,4v3"/>
                 </svg>
@@ -210,24 +210,26 @@ export default function Profile() {
             <input onChange={()=>updateEmail()} id="change-email-input" ref={inputEmail} style={{display:'none'}} type="text" />
             <Button style={{display:'none'}} ref={changeEmailBtn} id="change-email-btn" onClick={()=>closeEditEmail()}>save</Button>
           </div>
-          <div className="right edit"><a style={allowEdit} onClick={()=>editEmail()} >Edit</a></div>
+          <div className="right edit"><a  onClick={()=>editEmail()} >
+          {/* Edit */}
+            </a></div>
         </div>
 
         <div className="row">
           <div className="left">Password</div>
           <div className="middle pass" >**********</div>
-          <div className="right edit"><a style={allowEdit}><EditPassword></EditPassword></a></div>
+          <div className="right edit"><a><EditPassword id={user.id} /></a></div>
         </div>
         
         <div className="row">
           <div className="left">License</div>
           <div className="middle">Basic - 100 participants</div>
-          <div className="right edit"><a style={allowEdit} target="_blank" href="/pricing">Edit</a></div>
+          <div className="right edit"><a  target="_blank" href="/pricing">Edit</a></div>
         </div>
 
         <div className="row">
           <div className="left"></div>
-          <DeleteButton style={allowEdit} onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
+          <DeleteButton  onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
           <div className="right edit"></div>
         </div>
       </article>

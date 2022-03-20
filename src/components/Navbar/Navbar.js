@@ -23,6 +23,14 @@ const Navbar = () => {
 	const [linkActive, setLinkActive] = useState('')
 
 	useEffect(() => {
+		const currentPath = history.location.pathname.slice(1)
+		if(linkActive){
+			const currentLink = linkActive.firstChild.textContent.toLowerCase().replace(' ','')
+			if(!currentLink && currentPath !== currentLink){
+				setLinkActive('')
+				removeFooterMarker()
+			}
+		}
 
 		// history.listen(()=>setCurrentUrl(history.location.pathname.slice(1)))
         const onScroll = () => displayNavBackground()

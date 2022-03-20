@@ -33,7 +33,7 @@ export const footerSocialData = [
 	{
 		name: 'Email',
 		icon: iconStyle(MdEmail),
-		to: 'mailto:office@chatterbeack.com'
+		to: 'mailto:office@chatterbeak.com'
 	},
 ];
 

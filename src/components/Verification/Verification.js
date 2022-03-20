@@ -130,12 +130,12 @@ export default function Verification() {
               niceAlert('Welcome to Chatterbeak!',1500,'success')
               history.push('/signin')
             }
-            else if(result.includes('10 minutes')){
-              niceAlert(result,3500)
+            else if(result.error.includes('10 minutes')){
+              niceAlert(result.error,3500)
               history.push('/signup')
             }
             else{
-                errorNotification(result,'top-center')
+                errorNotification(result.error,'top-center')
           }
       }
 

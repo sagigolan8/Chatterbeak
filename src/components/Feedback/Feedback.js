@@ -43,7 +43,7 @@ export default function App() {
   return (
 <>
 <ToastContainer/>
-<div className="container-feedback">
+<div style={allowEdit} className="container-feedback">
   <div className="feedback">
     <div className="rating">
       <input type="radio" name="rating" className="rates" id="rating-5"/>
@@ -146,8 +146,8 @@ export default function App() {
     </div>
   </div>
   <div className="feedback">
-    <textarea style={allowEdit} ref={textAreaRef} spellCheck="false" placeholder=" Leave your feedback here."></textarea>
-    <FeedbackButton style={allowEdit} onClick={()=>checkRating()}>Rate us!</FeedbackButton>
+    <textarea  ref={textAreaRef} spellCheck="false" placeholder=" Leave your feedback here."></textarea>
+    <FeedbackButton  onClick={()=>checkRating()}>Rate us!</FeedbackButton>
   </div>
 </div>
 </>

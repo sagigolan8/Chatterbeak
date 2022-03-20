@@ -53,7 +53,6 @@ export const SafetyData = [
 	{
 		name: 'Best Security',
 		description: 'We offer the best data security to our clients, which makes us stand out',
-		// icon: iconStyle(GrSecure,'#fff'),
 		icon: iconStyle(RiGitRepositoryPrivateFill,'#fff'),
 		imgClass: 'one',
 	},
@@ -66,14 +65,13 @@ export const SafetyData = [
 	{
 		name: 'Maintenance',
 		description: 'Our code is written in highest standards, which makes it highly sustainable',
-		// icon: iconStyle(GrHostMaintenance,'#fff'),
 		icon: iconStyle(CgWebsite,'#fff'),
 		imgClass: 'three',
 	},
 	{
 		name: 'Reports',
 		description:
-		'We receive and evaluate reports of abuse and violations reported from the clients We work relentlessly to keep our users and our platform safe',
+		'We receive and evaluate reports of abuse and violations reported from the clients, we work relentlessly to keep our users and our platform safe',
 		icon: iconStyle(RiFileWarningLine,'#fff'),
 		imgClass: 'six',
 	},

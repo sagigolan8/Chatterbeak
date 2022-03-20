@@ -36,6 +36,16 @@ body {
   grid-template-columns: repeat(3, 1fr);
   margin: 0 20px;
   padding-bottom: 25px;
+  #user-name {
+    text-transform: capitalize;
+    font-size: clamp(0.8rem, 2.5vw, 1.4rem);
+    font-weight: 600;
+  }
+  .meeting-id-div {
+    display: flex;
+    align-content: space-around;
+    flex-wrap: wrap;
+  }
   .left {
     .pic {
       position: relative;
@@ -141,7 +151,7 @@ body {
 
 .edit {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   font-weight: 500;
   > a {
     color: #0060ebd9;
