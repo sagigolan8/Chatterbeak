@@ -11,7 +11,6 @@ import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import Footer from './components/Footer/Footer';
 import Terms from './components/Terms/Terms';
 import Disclaimer from './components/Disclaimer/Disclaimer';
-import Report from './components/Report/Report';
 import SignIn from './components/SignIn/SignIn';
 import Safety from './components/Safety/Safety';
 import Feedback from './components/Feedback/Feedback';
@@ -24,7 +23,7 @@ import { UserContext } from './components/Context/UserContext';
 function App() {
 
 	const [user, setUser] = useState({
-		name:'',
+		name:'Sagi Golan',
 		email:'',
 		password:'',
 		id:'',
@@ -35,7 +34,9 @@ function App() {
 	return (
 		<Router>
 			<GlobalStyle />
+			<UserContext.Provider value={{ user }}>
 			<Navbar />
+			</UserContext.Provider>
 			<Switch>
 				<Route path="/" exact component={Home} />
 				<Route path="/policy" exact component={PrivacyPolicy} />

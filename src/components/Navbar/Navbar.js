@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { FaRProject, FaTimes } from 'react-icons/fa';
 import { CgMenuRight } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
@@ -11,11 +11,14 @@ import {
 	NavMenu,
 	NavLinks,
 	NavItem,
+	NavUser,
 } from './NavbarStyles.js';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { data } from '../../data/NavbarData';
+import { UserContext } from '../Context/UserContext.js';
 // import { animateScroll as scroll } from 'react-scroll';
 const Navbar = () => {
+	const { user } = useContext(UserContext)
 	let history = useHistory();
 	const navRef = useRef()
 	const [inverse, setInverse] = useState(true)
@@ -95,8 +98,13 @@ const Navbar = () => {
 						linkActive.classList.remove('active-nav')
 					}}>
 						<NavIcon src="./assets/chatterlogo.png" alt="logo" />
-
 					</NavLogo> 
+						<NavUser href='/profile'
+								>
+							{
+								user.name ? `🟢 ${user.name}` : ''
+							}
+							</NavUser>
 					<MobileIcon onClick={handleClick}>
 						{show ? <FaTimes /> : <CgMenuRight />}
 					</MobileIcon>
