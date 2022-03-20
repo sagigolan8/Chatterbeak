@@ -19,7 +19,7 @@ export const sendOtpAgain = async (user) => { //send opt to email account again
     }
 }
 
-export const updateProfile = async (user) => { //send opt to email account again
+export const updateProfile = async (user) => { 
     try{
         const { data } = await axios.put(`${baseUrl}/profile/update`,{ ...user });
         return data
@@ -28,9 +28,37 @@ export const updateProfile = async (user) => { //send opt to email account again
     }
 }
 
-export const deleteProfile = async (id) => { //send opt to email account again
+export const deleteProfile = async (id) => { 
     try{
         const { data } = await axios.delete(`${baseUrl}/profile/delete/${id}`);
+        return data
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const checkPassword = async (id, password) => { 
+    try{
+        const { data } = await axios.post(`${baseUrl}/profile/password`,{ id, password });
+        return data
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const setNewPassword = async (id, password) => { 
+    try{
+        const { data } = await axios.put(`${baseUrl}/profile/password`,{ id, password });
+        return data
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export const getAgoraToken = async () => { 
+    try{
+        const { data } = await axios.get(`${baseUrl}/agora/token`);
+        console.log(data)
         return data
     } catch (err) {
         console.error(err);
