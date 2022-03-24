@@ -31,7 +31,7 @@ export const deleteAlert = async (title) =>{
   }
 
 
-export const errorNotification = (text,position='top center')=>{
+export const errorNotification = (text,position)=>{
   toast.error(text, {
     position,
     autoClose: 3000,
@@ -43,7 +43,7 @@ export const errorNotification = (text,position='top center')=>{
     });
 }
 
-export const successNotification = (text,position='top center')=>{
+export const successNotification = (text,position)=>{
   toast.success(text, {
     position,
     autoClose: 3000,
@@ -55,7 +55,7 @@ export const successNotification = (text,position='top center')=>{
     });
 }
 
-export const infoNotification = (text,position='top center')=>{
+export const infoNotification = (text,position)=>{
   toast.info(text, {
     position,
     autoClose: 4000,

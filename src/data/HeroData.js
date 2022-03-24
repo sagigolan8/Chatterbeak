@@ -9,8 +9,6 @@ export const heroOne = {
 	buttonLabel: 'Find More',
 	imgStart: 'start',
 	img: 'https://img.freepik.com/vector-gratis/videoconferencia-casa-hombre-videollamada-reunion-clientes-casa-saludo-mensajes-muchos-idiomas-escritos-diferentes_218660-169.jpg?w=900',
-	// img: 'https://cdn.dribbble.com/users/2157126/screenshots/6737281/illustration.gif',
-	// img: './assets/svg/Deal.svg',
 	start: 'true',
 };
 
@@ -27,7 +25,6 @@ export const heroTwo = {
 	linkTo: '/more',
 	imgStart: 'start',
 	img: 'https://davidwalsh.name/demo/2020/09/undraw-content-team.png',
-	// img: './assets/svg/Connection.svg',
 	start: 'true',
 };
 
@@ -44,7 +41,6 @@ export const heroThree = {
 	
 	linkTo: '/download',
 	imgStart: '',
-	// img: './assets/svg/ChartUp.svg',
 	img: 'https://lpwanserver.com/img/undraw_blooming.svg',
 	start: 'true',
 };
@@ -62,11 +58,9 @@ export const HeroFour = {
 	linkTo: '/more',
 	imgStart: 'start',
 	img: 'https://explore.zoom.us/media/hero-banner-2.svg',
-	// img: './assets/svg/Connection.svg',
 	start: 'true',
 };
 
-////////////////////////////// not edited except the img
 export const HeroFive = {
 	reverse: true,
 	inverse: true,

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Container, Section } from '../../globalStyles';
 import InfoModal from '../Modals/InfoModal';
 import {
-	FeatureText,
 	FeatureTitle,
 	FeatureWrapper,
 	FeatureColumn,
@@ -51,8 +50,6 @@ const Features = ({featuresData,header,inverse}) => {
 								{el.icon}
 							</FeatureImageWrapper>
 							<FeatureName>{el.name}</FeatureName>
-							{/* <FeatureText>{el.description}</FeatureText> */}
-							
 						</FeatureColumn>
 					))}
 				</FeatureWrapper>

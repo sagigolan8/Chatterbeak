@@ -84,6 +84,11 @@
   .ellipsis-menu {
     visibility: visible;
   }
+  .join-wrapper {
+    > input {
+      font-size: 12px !important;
+    }
+  }
 }
 
 @media screen and (max-width: 520px) {
@@ -242,14 +247,14 @@ main {
   width: 20px;
 }
 
-#join-btn {
-  background-color: #1f1f1f8e;
-  border: none;
-  color: #fff;
-  font-size: 22px;
-  padding: 20px 30px;
-  cursor: pointer;
-}
+// #join-btn {
+//   background-color: #1f1f1f8e;
+//   border: none;
+//   color: #fff;
+//   font-size: 22px;
+//   padding: 20px 30px;
+//   cursor: pointer;
+// }
 
 #user-streams {
   display: grid;
@@ -320,12 +325,57 @@ main {
     margin: 0 auto;
   }
 }
+@media screen and (max-width: 1400px) {
+  main {
+    width: 90%;
+    margin: 0 auto;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
 @media screen and (max-width: 660px) {
   #footer {
     font-size: 80%;
   }
   .user-uid {
     font-size: 60%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+@media screen and (max-width: 580px) {
+  #footer {
+    font-size: 80%;
+  }
+  .user-uid {
+    font-size: 60%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+@media screen and (max-width: 530px) {
+  #footer {
+    font-size: 80%;
+  }
+  .user-uid {
+    font-size: 60%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+@media screen and (max-width: 510px) {
+  #footer {
+    font-size: 80%;
+  }
+  .user-uid {
+    font-size: 60%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 }
 @media screen and (max-width: 480px) {
@@ -335,13 +385,38 @@ main {
   .user-uid {
     font-size: 40%;
   }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
 }
-@media screen and (max-width: 435px) {
+@media screen and (max-width: 455px) {
   #footer {
     font-size: 50%;
   }
   #user-streams {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  }
+  .user-uid {
+    font-size: 30%;
+  }
+}
+@media screen and (max-width: 425px) {
+  #footer {
+    font-size: 50%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  }
+  .user-uid {
+    font-size: 30%;
+  }
+}
+@media screen and (max-width: 395px) {
+  #footer {
+    font-size: 50%;
+  }
+  #user-streams {
+    grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
   }
   .user-uid {
     font-size: 30%;

@@ -7,9 +7,10 @@ import{
     LegalHeaderWrapper,
     LegalCardSubText,
 } from '../Legal/LegalStyles'
-import { Container } from '@mui/material'
 import { UserContext } from '../Context/UserContext'
 import { getAgoraToken } from '../../services/request'
+import { Main, Container } from '../../globalStyles'
+import { FormButton, FormInput, FormLabel } from '../Form/FormStyles'
 
 export default function Meeting() {
     const { user } = useContext(UserContext)
@@ -23,6 +24,7 @@ export default function Meeting() {
 //#1
 let client = AgoraRTC.createClient({mode:'rtc', codec:"vp8"})
 
+AgoraRTC.setLogLevel(4) //stops agora logs
 
 //#2
 let config = {
@@ -48,10 +50,7 @@ let localTrackState = {
 let remoteTracks = {}
   useEffect(()=>{
 
-    // (async()=>))();
-
     window.scrollTo(0, 0)
-
 
     document.getElementById('join-btn').addEventListener('click', async () => {
         const res = await getAgoraToken() 
@@ -104,19 +103,18 @@ let remoteTracks = {}
             }
             //Leave the channel
             await client.leave()
-            document.getElementById('footer').style.display = 'none'
-            document.getElementById('user-streams').innerHTML = ''
-            document.getElementById('join-wrapper').style.display = 'block'
+            if(document.getElementById('footer')){
+                document.getElementById('footer').style.display = 'none'
+                document.getElementById('user-streams').innerHTML = ''
+                document.getElementById('join-wrapper').style.display = 'block'
+            }
         }
 
     audioRef.current.addEventListener('click', handleAudio)
 
     videoRef.current.addEventListener('click', handleVideo)
 
-
     leaveRef.current.addEventListener('click', handleLeave)
-
-
 
 
 //Method will take all my info and set user stream in frame
@@ -132,55 +130,45 @@ let joinStreams = async () => {
         for (let i = 0; evt.length > i; i++){
             let speaker = evt[i].uid
             let volume = evt[i].level
-            if(volume > 0){
+            if(volume > 0 ){
                 document.getElementById(`volume-${speaker}`).src = './assets/volume-on.svg'
             }else{
+                if(document.getElementById(`volume-${speaker}`))
                 document.getElementById(`volume-${speaker}`).src = './assets/volume-off.svg'
             }
-            
-        
-            
         }
     });
 
-    // console.log(document.getElementById('shareScreen'))
-    // document.getElementById('shareScreen').addEventListener('click',playVid)
     //#6 - Set and get back tracks for local user
     [config.uid, localTracks.audioTrack, localTracks.videoTrack] = await  Promise.all([
-        client.join(config.appid, config.channel, config.token ||null, config.uid ||null),
+        client.join(config.appid, config.channel, config.token || null, config.uid || null),
         AgoraRTC.createMicrophoneAudioTrack(),
         AgoraRTC.createCameraVideoTrack()
-
     ])
     
     //#7 - Create player and add it to player list
     let player = `<div class="video-containers" id="video-wrapper-${config.uid}">
-                        <p class="user-uid"><img class="volume-icon" id="volume-${config.uid}" src="./assets/volume-on.svg" /> username-> ${user.name}</p>
+                        <p class="user-uid"><img class="volume-icon" id="volume-${config.uid}" src="./assets/volume-on.svg" />${user.name}</p>
                         <div class="video-player player" id="stream-${config.uid}"></div>
                   </div>`
 
     document.getElementById('user-streams').insertAdjacentHTML('beforeend', player);
     //#8 - Player user stream in div
     localTracks.videoTrack.play(`stream-${config.uid}`)
-    
 
     //#9 Add user to user list of names/ids
 
     //#10 - Publish my local video tracks to entire channel so everyone can see it
     await client.publish([localTracks.audioTrack, localTracks.videoTrack])
-
 }
-
 
 let handleUserJoined = async (participant, mediaType) => {
     console.log('Handle participant joined')
-
     //#11 - Add participant to list of remote participants
     remoteTracks[participant.uid] = participant
     console.log(remoteTracks)
     //#12 Subscribe ro remote participants
     await client.subscribe(participant, mediaType)
-   
     
     if (mediaType === 'video'){
         let player = document.getElementById(`video-wrapper-${participant.uid}`)
@@ -190,13 +178,12 @@ let handleUserJoined = async (participant, mediaType) => {
         }
  
         player = `<div class="video-containers" id="video-wrapper-${participant.uid}">
-                        <p class="user-uid"><img class="volume-icon" id="volume-${participant.uid}" src="./assets/volume-on.svg" /> username-> ${user.name}</p>
+                        <p class="user-uid"><img class="volume-icon" id="volume-${participant.uid}" src="./assets/volume-on.svg" />${user.name}</p>
                         <div  class="video-player player" id="stream-${participant.uid}"></div>
                   </div>`
         document.getElementById('user-streams').insertAdjacentHTML('beforeend', player);
          participant.videoTrack.play(`stream-${participant.uid}`)
     }
-    
 
     if (mediaType === 'audio') {
         participant.audioTrack.play();
@@ -212,30 +199,7 @@ let handleUserLeft = (participant) => {
     delete remoteTracks[participant.uid]
     document.getElementById(`video-wrapper-${participant.uid}`).remove()
 }
-   async function playVid(){
-        // AgoraRTC.createMicrophoneAudioTrack()
-        // AgoraRTC.createScreenVideoTrack({
-        //   encoderConfig: {
-        //     framerate: 15,
-        //     height: 720,
-        //     width: 1280
-        //   }
-        // }, "auto")
-        [config.uid, localTracks.audioTrack, remoteTracks] = await Promise.all([
-            // join the channel
-            client.join(config.appid, config.channel, config.token || null, config.uid || null),
-            // ** create local tracks, using microphone and screen
-            AgoraRTC.createMicrophoneAudioTrack(),
-            AgoraRTC.createScreenVideoTrack({
-              encoderConfig: {
-                framerate: 15,
-                height: 720,
-                width: 1280
-              }
-            }, "auto")
-          ]);
-    }
-// document.querySelector('#shareScreen').addEventListener('click', playVid)
+
     
 return () => {
    //remove camera light
@@ -244,16 +208,16 @@ return () => {
        video.srcObject = null;
    }
    handleLeave()
-    audioRef.current.removeEventListener('click', handleAudio)
-
-    videoRef.current.removeEventListener('click', handleVideo)
-
-    leaveRef.current.removeEventListener('click', handleLeave)
+   if(audioRef.current && videoRef.current && leaveRef.current){
+       audioRef.current.removeEventListener('click', handleAudio)
+   
+       videoRef.current.removeEventListener('click', handleVideo)
+   
+       leaveRef.current.removeEventListener('click', handleLeave)
+   }
 
 }
   },[])
-
- 
 
   return (
     <LegalSection background style={{padding:'90px 0'}}>
@@ -261,25 +225,27 @@ return () => {
     </LegalHeaderWrapper>
     <Container>
         <LegalCardSubText>
-    <main className='main-meeting-container'>
+    <Main className='main-meeting-container'>
 
-        <div id="join-wrapper">
+        {/* <div id="join-wrapper">
         <input id="username" type="text" placeholder="Enter your name..." />
          <button id="join-btn">Join Stream</button>
-        </div>
+        </div> */}
+        <Container id="join-wrapper">
+            {/* <FormLabel style={{color:'#afafaf'}}>Create Meeting</FormLabel>
+            <FormInput placeholder='Paste here your meeting ID' />
+            <FormButton style={{marginBottom:'20px'}}>Create Stream</FormButton> */}
+            
+            <FormLabel style={{color:'#afafaf'}}>Join Meeting</FormLabel>
+            {/* <FormInput placeholder="Paste here your friend's meeting ID" /> */}
+            <FormButton id="join-btn">Join Stream</FormButton>
+        </Container>
+
+
         <div id="user-streams" ></div>
-        
-    {/* <button id='shareScreen' style={{padding: '20px'}}>share screen</button> */}
-
-
         <div id="footer">
-            {/* <div class="icon-wrapper">
-                <img class="control-icon" id="camera-btn" src="./assets/video.svg" />
-                <p>Cam</p>
-            </div> */}
                 <div 
                     ref={videoRef}
-                // onClick={()=>handleVideo()}
                  className="main__controls__button main__video_button" >
                     {
                        video
@@ -294,13 +260,9 @@ return () => {
                        <span>Stop Video</span>
                        </>
                    }
-
                </div>
-
-
                <div 
                     ref={audioRef}
-            //    onClick={()=>handleAudio()} 
                className="main__controls__button main__mute_button">
                    {
                        audio
@@ -315,25 +277,7 @@ return () => {
                        <span>Mute</span>
                        </>
                    }
-
-
                </div>
-
-
-            {/* <div class="icon-wrapper">
-                <img class="control-icon" id="mic-btn" src="./assets/microphone.svg" />
-                <p>Mic</p>
-            </div> */}
-
-
-
-
-
-            {/* <div class="icon-wrapper">
-                <img class="control-icon" id="leave-btn" src="./assets/leave.svg" />
-                <p>Leave</p>
-            </div> */}
-            
             <div
                 ref={leaveRef}
                 className="main__controls__block"
@@ -342,11 +286,8 @@ return () => {
                   <span id="leave-btn" className="leave_meeting">Leave Meeting</span>
                </div>
             </div>
-            
-            
         </div>
-            
-    </main>
+    </Main>
             </LegalCardSubText>
         </Container>
     </LegalSection> 

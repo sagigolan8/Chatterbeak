@@ -59,7 +59,7 @@ export default function InfoModal({
   inverse
 }) {
   
-  const { user, setUser } = React.useContext(UserContext) 
+  const { user } = React.useContext(UserContext) 
   const [open, setOpen] = React.useState(false);
   const [theme, setTheme] = React.useState({border:'none'})
 
@@ -81,15 +81,6 @@ export default function InfoModal({
     setOpenModal(false)
     await updateProfile(user)
   };
-
-  const colorSelected = () => {
-    const bgColor = document.querySelector('#colorize-bg').value
-    const textColor = document.querySelector('#colorize-text').value
-    document.querySelector('.all').style.background = bgColor
-    document.querySelector('.all').style.color = textColor
-    document.querySelector('.pic').style.background = bgColor
-    document.querySelector('.pic').style.color = textColor
-}
 
   return (
     <div> 

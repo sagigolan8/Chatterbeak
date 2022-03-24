@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Heading, TextWrapper } from '../../globalStyles';
 import { IconContext } from 'react-icons/lib';
 import {
@@ -15,10 +15,8 @@ import {
 	PriceLink
 } from './PricingStyles';
 import { pricingData } from '../../data/PricingData';
-import { useHistory } from 'react-router-dom'
 
 function Pricing() {
-	const linkRef = useRef()
 
 	useEffect(()=>{
 		window.scrollTo(0, window.innerHeight*0.1)
@@ -37,7 +35,6 @@ function Pricing() {
 						color="white"
 						align="center"
 					>
-						{/* Create, maintain and store your data with Chatterbeak. */}
 						Find the right solution for your needs in Chatterbeak.
 					</TextWrapper>
 					<PricingContainer>

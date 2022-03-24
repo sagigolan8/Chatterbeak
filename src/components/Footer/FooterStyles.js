@@ -103,15 +103,12 @@ export const FooterLinkTitle = styled.h2`
 
 export const FooterLink = styled(Link)`
 	cursor: default;
-	// color: #fff;
 	text-decoration: none;
 	margin-bottom: 0.5rem;
 `;
 export const FooterSpan = styled.span`
 	cursor: pointer;
 	color: #fff;
-	// text-decoration: none;
-	// margin-bottom: 0.5rem;
 	 &.active-footer{
 		border-bottom: 2px solid white;
 	 }
@@ -142,7 +139,6 @@ export const FooterRights = styled.div`
 	color: #fff;
 	margin-bottom: 16px;
 	width: 100%;
-	// font-size: 0.8rem;
 	font-size: clamp(.8rem, 5vw, 1.1rem);
 	text-align: center;
 	font-weight:bold;

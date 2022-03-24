@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import './style.scss'
 import $ from 'jquery'
 import copy from 'copy-to-clipboard';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { deleteAlert, errorNotification, infoNotification, niceAlert } from '../../services/alerts';
+import { deleteAlert, errorNotification, infoNotification } from '../../services/alerts';
 import { useHistory } from 'react-router-dom';
 import Modal from '../Modals/ProfileColor'
 import { DeleteButton } from './ProfileStyles';
@@ -12,7 +12,7 @@ import EditPassword from '../Modals/EditPassword';
 import { Button } from '@mui/material';
 import validator from 'validator';
 import { UserContext } from '../Context/UserContext';
-import { deleteProfile, updateProfile } from '../../services/request';
+import { deleteCookie, deleteProfile, updateProfile } from '../../services/request';
 
 
 export default function Profile() {
@@ -21,14 +21,6 @@ export default function Profile() {
     const [changeName, setChangeName] = useState(false)
     const [changeEmail, setChangeEmail] = useState(false)
     const [allowEdit, setAllowEdit] = useState({pointerEvents: 'none'})
-    // DB propertirs => get bgcolor and color from user
-    // const [userBgColor, setUserBgColor] = useState('#969696')
-    // const [userColor, setUserColor] = useState('#fff')
-    // const [name, setName] = useState('Some user')
-    // const [email, setEmail] = useState('user@gmail.com')
-    // const [userId, setUserId] = useState('91u2dhjk2343e3d')
-    // const [userColor, setUserColor] = useState('')
-
     const userName = useRef()
     const inputName = useRef()
     const changeNameBtn = useRef()
@@ -59,6 +51,7 @@ export default function Profile() {
     const deleteUser = async () =>{
       const isDeleted = await deleteAlert('Are you sure you want to delete the account?')
       if(isDeleted){
+        deleteCookie(user._id)
         setUser({
           name:'',
           email:'',
@@ -67,14 +60,14 @@ export default function Profile() {
           bgColor:'#969696',
           color:'#fff'
       })
-        await deleteProfile(user.id)
+        await deleteProfile(user._id)
         history.push('/')
       }
     }
 
-    const changeColor = () =>{
+    const changeColor = () => 
       setUser({...user, color: picRef.current.style.color, bgColor: picRef.current.style.background})
-    }
+    
 
     const showId = async ()=> {
       $(".wrapper").toggleClass("is-hidden");
@@ -84,7 +77,11 @@ export default function Profile() {
       copy(input[0].value)
         setTimeout(function() {
           if(inputType === "text"){
+            input.css('z-index', '1');
             infoNotification("Copied to clipboard","bottom-right")
+          }
+          else{
+            input.css('z-index', '0');
           }
         }, 50);
       };
@@ -130,13 +127,10 @@ export default function Profile() {
         userEmail.current.textContent = inputEmail.current.value
       }
 
-      const updateName = () =>{ //todo
-        // setName(userName.current.value)
+      const updateName = () =>{ 
         setUser({...user, name: inputName.current.value})
       }
-      const updateEmail = () =>{ //todo
-
-        // setEmail(userEmail.current.value)
+      const updateEmail = () =>{ 
         setUser({...user, email: inputEmail.current.value})
       }
 
@@ -183,13 +177,15 @@ export default function Profile() {
         </div>
 
         <div className="row">
-          <div className="left meeting-id-div">Meeting ID</div>
+          {/* <div className="left meeting-id-div">Meeting ID</div> */}
+          <div className="left meeting-id-div">Sign-In Email</div>
           <div className="middle">
             <div  className="wrapper is-hidden">
               <svg className="IconLock" viewBox="0 0 20 20">
                     <path d="m3,9v11h14V9M4,9V6c0-3.3 2.7-6 6-6c3.3,0 6,2.7 6,6v3H14V6c0-2.2-1.8-4-4-4-2.2,0-4,1.8-4,4v3"/>
                 </svg>
-              <input  id="meeting-id" type="password" value={user.id} disabled/>
+              {/* <input  id="meeting-id" type="password" value={user._id} disabled/> */}
+              <input  id="meeting-id" type="password" value={` ${user.email}`} disabled/>
             
               <span onClick={()=>showId()} className="eye-wrapper">
             <svg className="eye" viewBox="0 0 41 35">
@@ -203,7 +199,7 @@ export default function Profile() {
           <div className="right edit"></div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="left">Sign-In Email</div>
           <div className="middle">
             <span ref={userEmail} id="user-email" >{user.email}</span>
@@ -211,14 +207,14 @@ export default function Profile() {
             <Button style={{display:'none'}} ref={changeEmailBtn} id="change-email-btn" onClick={()=>closeEditEmail()}>save</Button>
           </div>
           <div className="right edit"><a  onClick={()=>editEmail()} >
-          {/* Edit */}
-            </a></div>
-        </div>
+          {/* Edit Password */}
+            {/* </a></div> */}
+        {/* </div>  */}
 
         <div className="row">
           <div className="left">Password</div>
           <div className="middle pass" >**********</div>
-          <div className="right edit"><a><EditPassword id={user.id} /></a></div>
+          <div className="right edit"><a><EditPassword user={user} /></a></div>
         </div>
         
         <div className="row">

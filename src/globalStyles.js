@@ -6,6 +6,11 @@ const GlobalStyle = createGlobalStyle`
   margin: 0;
   padding: 0;
   font-family: 'Montserrat', sans-serif;
+  button{
+	&:focus{
+		border: 4px solid #00237cb8;
+	}
+  }
   }
 
   /*scroll bar*/
@@ -24,13 +29,11 @@ const GlobalStyle = createGlobalStyle`
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 6px 6px 6px rgba(0, 0, 0, 0.897);
-  // background-color: #555;
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(2, 28, 65));
 }
 #style-1::-webkit-hover {
   border-radius: 10px;
   -webkit-box-shadow: inset 6px 6px 6px rgba(0, 0, 0, 0.3);
-  // background-color: #555;
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(2, 28, 65));
 }
 #styled-avatar {
@@ -39,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
+	display: ${({ flex }) => (flex ? 'flex' : '')};
 	width: 100%;
 	max-width: 1300px;
 	margin-right: auto;
@@ -171,10 +175,6 @@ export const Button = styled.button`
 
 	}
 
-	&:focus{
-		border: 4px solid #00237cb8;
-	}
-
 	&:hover:before {
 		height: 500%;
 	}
@@ -240,6 +240,10 @@ export const ScrollerDiv = styled.div`
 	export const ScrollerImg = styled.img`
 	border:none;
 	z-index: 2000;
+`;
+
+export const Main = styled.main`
+
 `;
 
 

@@ -115,8 +115,6 @@ font-size: 0.92rem;
 
 &:before {
 	content: '⚫';
-	// content: '◼';
-	// content: '🔲';
 	margin-right: 0.4rem;
 }
 `;

@@ -11,7 +11,7 @@ import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
 import { errorNotification, successNotification } from '../../services/alerts';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { checkPassword, setNewPassword } from '../../services/request';
 
@@ -57,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function EditPassword({id}) {
+export default function EditPassword({user}) {
   const oldPassword = React.useRef()
   const confirmPassword = React.useRef()
 
@@ -71,12 +71,9 @@ export default function EditPassword({id}) {
     setOpen(false);
   };
 
-  // const checkPassword = (password) =>{
-  //  return false 
-  // }
 
-  const validateOldPassword = async () =>{  //todo --> take password from db and compare
-    const isValidPassword = await checkPassword(id, oldPassword.current.value)
+  const validateOldPassword = async () =>{ 
+    const isValidPassword = await checkPassword(user, oldPassword.current.value)
     if(!isValidPassword){
       return errorNotification('Password incorrect',"top-center")
     }
@@ -88,7 +85,7 @@ export default function EditPassword({id}) {
     }
   }
   
-  const validateNewPassword = () =>{ //todo --> save to db
+  const validateNewPassword = () =>{ 
     const newPassword = oldPassword.current
     const confirmNewPassword = confirmPassword.current
     if(confirmNewPassword.style.display === "none")
@@ -100,7 +97,7 @@ export default function EditPassword({id}) {
       return errorNotification('Password are not match',"top-center")
     }
     else{
-      setNewPassword(id, newPassword.value)
+      setNewPassword(user, newPassword.value)
       successNotification('Password changed!',"top-center")
       setChangePassword(false)
       setOpen(false)

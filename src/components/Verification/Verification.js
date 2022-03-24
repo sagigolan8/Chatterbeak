@@ -1,10 +1,9 @@
-import { data } from 'jquery'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { Button } from '../../globalStyles'
 import { errorNotification, infoNotification, niceAlert } from '../../services/alerts'
-import { checkOtp, getUserId, isEmailAvailable, sendOtpAgain } from '../../services/request'
+import { checkOtp, sendOtpAgain, validateSignIn } from '../../services/request'
 import { UserContext } from '../Context/UserContext'
 import { LegalSection } from '../Legal/LegalStyles'
 import './style.scss'
@@ -15,6 +14,8 @@ export default function Verification() {
     const history = useHistory()
     
     useEffect(()=>{
+      console.log(user)
+      console.log(localStorage.getItem('signup'))
       window.scrollTo(0, window.innerHeight*0.1)
       if(!user.name){
         history.push('/')
@@ -22,9 +23,7 @@ export default function Verification() {
         infoNotification('You have 10 minutes to complete the verification ','bottom-right')
 
         const inputs = document.querySelectorAll('.input-form')
-        
         inputs[0].focus()
-
         setInputs(inputs)
 
         const handlePaste = (e) => {
@@ -43,6 +42,7 @@ export default function Verification() {
         input.addEventListener('focus', handleFocus)
         input.addEventListener('keydown', handleKeyDown)
     })
+
     return () => {
         inputs.forEach((input) => {
             input.removeEventListener('paste', handlePaste)
@@ -51,10 +51,6 @@ export default function Verification() {
         })
     }
     },[])
-
-
-
-    
     
     const KEYBOARDS = {
         backspace: 8,
@@ -117,18 +113,21 @@ export default function Verification() {
         }, 0)
       }
 
-
-      const verifyOtp = async (e) => { // otp - one time password
+      const verifyOtp = async (e) => { 
         e.preventDefault()
         let otp = ''
         inputs.forEach(({ value }) => {
             otp = `${otp}${value}` 
           })
           const result = await checkOtp(user,otp)
+          console.log('result',result)
           if(!result.error){
+            console.log(user)
             setUser(result)
               niceAlert('Welcome to Chatterbeak!',1500,'success')
-              history.push('/signin')
+              await validateSignIn({ email: user.email, password: user.email })
+              history.push('/signup')
+              localStorage.removeItem('signup')
             }
             else if(result.error.includes('10 minutes')){
               niceAlert(result.error,3500)
@@ -139,37 +138,34 @@ export default function Verification() {
           }
       }
 
-      
-
-
   return (
     <LegalSection background>
-    <div className="verification">
-        <ToastContainer />
-            <h1 className="verification-header">Code Verification</h1>
-            <h3 className="verification-subheader">Verification code just sent to your email please paste it here</h3>
-        <form onSubmit={(e)=>verifyOtp(e)} onInput={(e)=>handleInput(e)} className="verification-form" action="#"> 
-            <div className="verification-wrapper">
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-              <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
-            </div>
-            <div className="form-btn">
-                <Button type="submit" className="otp-btn">Check</Button>
-                <Button type="reset" className="otp-btn">Reset</Button>
-                <div className="send-again-wrapper">
-                <a 
-                  onClick={()=>{
-                    sendOtpAgain(user)
-                    infoNotification('verification code sent to your email','bottom-right')
-                  }} className='send-again-link'>send again?</a>
-                </div>
-            </div>
-          </form>
-    </div>
+      <div className="verification">
+          <ToastContainer />
+              <h1 className="verification-header">Code Verification</h1>
+              <h3 className="verification-subheader">Verification code just sent to your email please paste it here</h3>
+          <form onSubmit={(e)=>verifyOtp(e)} onInput={(e)=>handleInput(e)} className="verification-form" action="#"> 
+              <div className="verification-wrapper">
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+                <input type="tel" maxLength="1" pattern="[0-9]" className="input-form"/>
+              </div>
+              <div className="form-btn">
+                  <Button type="submit" className="otp-btn">Check</Button>
+                  <Button type="reset" className="otp-btn">Reset</Button>
+                  <div className="send-again-wrapper">
+                  <a 
+                    onClick={()=>{
+                      sendOtpAgain(user)
+                      infoNotification('verification code sent to your email','bottom-right')
+                    }} className='send-again-link'>send again?</a>
+                  </div>
+              </div>
+            </form>
+      </div>
   </LegalSection>
   )
 }

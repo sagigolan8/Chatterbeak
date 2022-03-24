@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { FaRProject, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { CgMenuRight } from 'react-icons/cg';
 import { IconContext } from 'react-icons';
 import {
@@ -12,38 +12,41 @@ import {
 	NavLinks,
 	NavItem,
 	NavUser,
+	NavLogOut,
 } from './NavbarStyles.js';
 import { useHistory } from 'react-router-dom';
 import { data } from '../../data/NavbarData';
 import { UserContext } from '../Context/UserContext.js';
-// import { animateScroll as scroll } from 'react-scroll';
+import { BiLogOut } from 'react-icons/bi';
+import { checkToken, deleteCookie } from '../../services/request.js';
+
 const Navbar = () => {
-	const { user } = useContext(UserContext)
+	const { user, setUser, initialState } = useContext(UserContext)
 	let history = useHistory();
 	const navRef = useRef()
 	const [inverse, setInverse] = useState(true)
 	const [inverseHover, setInverseHover] = useState(true)
-	const [linkActive, setLinkActive] = useState('')
+	const [show, setShow] = useState(false);
 
 	useEffect(() => {
-		const currentPath = history.location.pathname.slice(1)
-		if(linkActive){
-			const currentLink = linkActive.firstChild.textContent.toLowerCase().replace(' ','')
-			if(!currentLink && currentPath !== currentLink){
-				setLinkActive('')
-				removeFooterMarker()
+		const connectUserByToken = async () => {
+			console.log('check token')
+			const userData = await checkToken(document.cookie)
+			if(userData.error){
+				setUser(initialState)
+				return handleLogOut(user._id,'tokenCheck') 
 			}
+			return setUser(userData)
 		}
+		connectUserByToken()
+			history.listen( async () => !localStorage.getItem('signup') ?  await connectUserByToken() : '');
 
-		// history.listen(()=>setCurrentUrl(history.location.pathname.slice(1)))
         const onScroll = () => displayNavBackground()
 
         window.addEventListener('scroll', onScroll);
         
         return () => window.removeEventListener('scroll', onScroll);
-    }, [linkActive]);
-
-	const [show, setShow] = useState(false);
+    }, []);
 
 
 	const handleClick = () => {
@@ -64,45 +67,39 @@ const Navbar = () => {
 		}
 	};
 
-	/**
-	 * If we are in "homePage" we scroll to the selected id section. 
-	 * Else navigate to the location that pushed into the history. 
-	 */
+
 	const closeMobileMenu = (to, id,{ target: { parentElement } }) => {
-		removeFooterMarker()
 		history.push(to);
-		let location = history.location.pathname.slice(1)
-		location = location ? location : 'home'
-		if(location === parentElement.textContent.toLowerCase().replace(" ","")){
-			if(linkActive)
-			linkActive.classList.remove('active-nav')
-			setLinkActive(parentElement)
-			parentElement.classList.add('active-nav')
-		}
 		setShow(false);
 	};
 
-	const removeFooterMarker = () =>{
-		const currLink = document.querySelector('.active-footer')
-		if(currLink){
-			currLink.classList.remove('active-footer')
-		} 
+	const handleLogOut = (id,tokenCheck='') => {
+		setUser(initialState)
+		deleteCookie(id)
+		if(!tokenCheck){
+			history.push('/')
+		}
 	}
 
 	return (
 		<IconContext.Provider value={{ color: '#fff' }}>
 		<Nav ref={navRef}>
 				<NavbarContainer>
-					<NavLogo to="/" onClick={()=>{
-						if(linkActive)
-						linkActive.classList.remove('active-nav')
-					}}>
+					{
+						user.name && !localStorage.getItem('signup')
+						?
+					<NavLogOut>
+					<BiLogOut onClick={()=>handleLogOut(user._id)} style={{cursor:'pointer',fontSize:'26px'}} />
+					</NavLogOut>
+						:
+						''
+					}
+					<NavLogo to="/">
 						<NavIcon src="./assets/chatterlogo.png" alt="logo" />
 					</NavLogo> 
-						<NavUser href='/profile'
-								>
+						<NavUser href="/profile">
 							{
-								user.name ? `🟢 ${user.name}` : ''
+								user.name && !localStorage.getItem('signup') ? `🟢 ${user.name}` : ''
 							}
 							</NavUser>
 					<MobileIcon onClick={handleClick}>
@@ -114,9 +111,7 @@ const Navbar = () => {
 								<NavLinks
 									inverseHover={inverseHover} 
 									inverse={inverse} 
-									onClick={(e) => closeMobileMenu(el.to, el.id,e)
-									}
-								>
+									onClick={(e) => closeMobileMenu(el.to, el.id,e)}>
 									{el.text}
 								</NavLinks>
 							</NavItem>

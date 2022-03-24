@@ -5,7 +5,6 @@ import {
 	TextWrapper,
 	TopLine,
 	Heading,
-	ContentButton,
 	Subtitle,
 	ImgWrapper,
 	Img,
@@ -16,17 +15,14 @@ import { useInView } from 'react-intersection-observer';
 import { useAnimation } from 'framer-motion';
 
 export const Content = ({
-	primary,
 	topLine,
 	headline,
 	description,
-	buttonLabel,
 	img,
 	alt,
 	inverse,
 	reverse,
 	padding,
-	display
 }) => {
 	const initial = { opacity: 0, y: 30 };
 	const animation = useAnimation();
@@ -80,15 +76,6 @@ export const Content = ({
 							>
 								{description}
 							</Subtitle>
-							{/* <ContentButton
-								initial={initial}
-								transition={{ delay: 1, duration: 0.5 }}
-								animate={animation}
-								inverse={inverse}
-								primary={primary}
-							>
-								{buttonLabel}
-							</ContentButton> */}
 						</TextWrapper>
 					</ContentColumn>
 					<ContentColumn

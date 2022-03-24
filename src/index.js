@@ -10,4 +10,3 @@ ReactDOM.render(
 );
 
 //  change port =>  "start": "set PORT=3005 && react-scripts start",
-// trust-safety => https://explore.zoom.us/en/trust/trust-safety/

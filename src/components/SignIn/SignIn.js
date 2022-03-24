@@ -7,45 +7,41 @@ import {
 	FormRow,
 	FormLabel,
 	FormInputRow,
-	FormMessage,
 	FormButton,
 	FormTitle,
-	FormLink
+	// FormLink, // => forgot password
 } from '../Form/FormStyles';
 import { Container } from '../../globalStyles';
-import validateForm from './validateSignIn';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { errorNotification, niceAlert } from '../../services/alerts';
 import { ToastContainer } from 'react-toastify';
 import { UserContext } from '../Context/UserContext';
+import { validateSignIn } from '../../services/request';
 const SignIn = () => {
 	const history = useHistory()
-    const { user, setUser } = useContext(UserContext) 
+    const { user, setUser, initialState } = useContext(UserContext) 
 	
+
+
 	useEffect(()=>{
 		window.scrollTo(0, window.innerHeight*0.1)
-
 	},[])
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	// const [error, setError] = useState(null);
-	// const [success, setSuccess] = useState(null);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const result = await validateForm({ email, password });
+		const result = await validateSignIn({ email, password });
 
 		if (result.error) {
 			return errorNotification(result.error,'top-center')
 		}
 		setUser(result)
 		niceAlert('enjoy our services',2000,'success')
-		history.push('/profile')
-		// setEmail('');
-		// setPassword('');
-		// setError(null);
-		// setSuccess('success');
+		setEmail('');
+		setPassword('');
+
 	};
 
 	const messageVariants = {
@@ -67,7 +63,14 @@ const SignIn = () => {
 		<FormSection>
 			<Container>
 				<FormRow>
-					<FormColumn small>
+					{
+						user.name
+						?
+						<FormColumn small>
+							<FormTitle>You are successfully logged in </FormTitle>
+						</FormColumn>
+						:
+						<FormColumn small>
 						<FormTitle>Sign in</FormTitle>
 						<FormWrapper onSubmit={handleSubmit}>
 							{formData.map((el, index) => (
@@ -81,11 +84,13 @@ const SignIn = () => {
 									/>
 								</FormInputRow>
 							))}
-							<FormLink to="/" >forgot password?</FormLink>
+							{/* <FormLink to="/" >forgot password?</FormLink> */}
 							<FormButton type="submit">Sign In</FormButton>
 						</FormWrapper>
 							<ToastContainer/>
 					</FormColumn>
+					}
+					
 				</FormRow>
 			</Container>
 		</FormSection>

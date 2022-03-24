@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
 	FooterLinkItems,
 	FooterLinkTitle,
@@ -16,22 +16,7 @@ import {
 import { footerData, footerSocialData } from '../../data/FooterData';
 import { Row, Section } from '../../globalStyles';
 
-function Footer() {
-	const [linkActive, setLinkActive] = useState('')
-	const removeNavMarker = () =>{
-		const currLink = document.querySelector('.active-nav')
-		if(currLink){
-			currLink.classList.remove('active-nav')
-		} 
-	}
-	const addFooterMarker = ({ target }) =>{
-		removeNavMarker()
-		if(linkActive)
-		linkActive.classList.remove('active-footer')
-		setLinkActive(target)
-		target.classList.add('active-footer')
-	}
-
+const Footer = () => {
 	return (
 		<Section padding="4rem 0 2rem 0">
 			<FooterWrapper>
@@ -42,9 +27,7 @@ function Footer() {
 						</FooterLogo>
 						<FooterAddress>
 						20 lilienblum St. Chatterbeak buildings, Tel Aviv
-
 						</FooterAddress>
-
 						<Row align="center" margin="auto  0 0 0" gap="1rem">
 							{footerSocialData.map((social, index) => (
 								<FooterSocialIcon
@@ -62,19 +45,10 @@ function Footer() {
 						<FooterLinkItems key={index}>
 							<FooterLinkTitle>{footerItem.title}</FooterLinkTitle>
 							{footerItem.links.map((link, linkIndex) => (
-								// <FooterLink key={linkIndex} to="/privacy-policy">
-								<FooterLink
-									key={linkIndex} 
-									to={link.to}
-									
-								>
-									<FooterSpan
-										onClick={(e)=> addFooterMarker(e)
-									}
-									>
+								<FooterLink key={linkIndex} to={link.to}>
+									<FooterSpan>
 										{link.path}
 									</FooterSpan>
-									
 								</FooterLink>
 							))}
 						</FooterLinkItems>

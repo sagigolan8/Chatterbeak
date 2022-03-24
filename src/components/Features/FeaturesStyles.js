@@ -44,8 +44,6 @@ export const FeatureColumn = styled(motion.div)`
 
 	&:hover {
 		background-color: ${({inverse})=>(inverse ? '#0a2844' : '#e1e1e1b5')};
-		// transition: background-color 0.3s ease-in;
-		// &:hover {
 			transform: scale(1.11) !important;
 			transition: all 0.3s ease-out;
 		}

@@ -4,7 +4,7 @@ export const UserContext = createContext({
     name:'',
     email:'',
     password:'',
-    id:'',
+    _id:'',
     bgColor:'#969696',
     color:'#fff'
 });

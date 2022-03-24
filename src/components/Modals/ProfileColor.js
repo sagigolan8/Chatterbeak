@@ -53,8 +53,6 @@ BootstrapDialogTitle.propTypes = {
 export default function ColorModal({openModal,setOpenModal}) {
   
   const { user, setUser } = React.useContext(UserContext) 
-  // const theme = {background:'#101522',color:'#fff'}
-
 
   React.useEffect(()=>{ 
     if(openModal)

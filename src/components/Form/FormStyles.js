@@ -3,22 +3,21 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 export const FormSection = styled.div`
-	/* color: #fff; */
 	padding: ${({ padding }) => (padding ? '0 0 15px 0' : '160px 0')};
-	/* background: ${({ inverse }) => (inverse ? '#101522' : '#fff')}; */
 	background: #101522;
 `;
 
 export const FormTitle = styled.h1`
 	margin-bottom: -20px;
-	font-size: 38px;
+	font-size: ${(small)=>(small ? '25px' : '38px')};
 	line-height: 1.1;
 	font-weight: 600;
 	@media screen and (max-width: 460px) {
+		font-size: 140%;
 		margin-bottom: 20px;
 	}
 	@media screen and (max-width: 300px) {
-		font-size: 28px;
+		font-size: 130%;
 	}
 `;
 
@@ -42,12 +41,12 @@ export const FormLink = styled(Link)`
 `;
 
 export const FormColumn = styled.div`
-	box-shadow: 0 6px 16px rgb(211 206 206 / 75%);
-	/* margin-bottom: 15px; */
+	position: ${(relative) => (relative ? 'relative' : 'static')};
+	box-shadow: 0 6px 20px rgb(56 125 255 / 20%);
 	padding: 50px;
-	background: white;
+	background: #242424;
+	color:#fff;
 	border: 20px;
-	/* padding: ${({ small }) => (small ? '0 50px' : '0 15px')}; */
 	flex: 1;
 	max-width: 60%;
 	display: flex;
@@ -76,7 +75,6 @@ export const FormRow = styled.div`
 `;
 
 export const FormWrapper = styled.form`
-	/* max-width: 540px; */
 	padding-top: 0;
 	width: 100%;
 `;
@@ -94,7 +92,6 @@ export const FormInputRow = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	align-items: stretch;
-	// margin-bottom: 1.4rem;
 	margin-bottom: 0.7rem;
 
 	> p {
@@ -104,8 +101,8 @@ export const FormInputRow = styled.div`
 	}
 `;
 export const FormInput = styled.input`
-	// background: ${({background}) =>(background ? '#101522' : '')};
-	// box-shadow: ${({boxShadow})=>(boxShadow ? '0 6px 20px rgb(56 125 255 / 20%)' : '')};
+	color: #fff;
+	background: #242424;
 	display: block;
 	padding-left: 10px;
 	outline: none;
@@ -143,20 +140,25 @@ export const FormButton = styled.button`
 	background: none;
 	margin-top: 0.6rem;
 	white-space: nowrap;
-	/* color: #fff; */
+	color: #afafaf; 
 	outline: none;
 	width: 100%;
 	font-size: 1.4rem;
 	padding: 5px 15px;
-	border: 2px solid black;
-	cursor: pointer;
+	border: 2px solid #afafaf;
 	position: relative;
 	overflow: hidden;
 
+	&:focus{
+		border: 4px solid #00237cb8;
+	}
+
 	&:hover {
-		color: white;
+		cursor: pointer;
+		color: #242424;
 		transition: background-color 0.4s ease-in;
-		background-color: black;
+		background-color: #fff;
+		border-color: #fff;
 	}
 `;
 
@@ -168,19 +170,50 @@ export const FormConfirmation = styled.p`
 `
 
 export const FormConfirmationWrapper = styled.div`
+	color: #afafaf;
 	@media screen and (max-width: 471px) {
 		font-size: .84rem;
 	}
 `
 export const FormLinks = styled.a`
-	text-decoration: none;
+text-decoration: none;
 	color: #0060ebd9;
 	font-size: 14px;
 	font-weight: 500;
 	&:hover {
 		color:#4995cb;
 	}
+	&:focus{
+		border: 4px solid #00237cb8;
+	}
 	@media screen and (max-width: 471px) {
 		font-size: 11px;
+	}
+	`
+	
+export const FormLogOutButton = styled.div`
+	cursor:pointer;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	padding: 10px 15px;
+	border-radius: 10px;
+	border: none;
+	color: #fff;
+	font-weight: 600;
+	letter-spacing: 2px;
+	text-align: center;
+	background: #8E0E00;
+	background: -webkit-linear-gradient(to left, #8E0E00, #1F1C18);
+	background: linear-gradient(to left, #8E0E00, #1F1C18);
+	box-shadow: 3px 2px 3px rgb(255 255 255 / 41%);
+	&:hover{
+		transform: scale(1.15);
+		transition: all 0.3s ease-out;
+		box-shadow: 5px 4px 5px rgb(255 255 255 / 41%);
+	}
+	@media screen and (max-width: 451px) {
+		padding: 5px 10px;
+		font-size: .8rem;
 	}
 `

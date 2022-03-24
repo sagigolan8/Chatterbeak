@@ -53,11 +53,6 @@ export const footerData = [
 				path: 'Pricing',
 				to: '/pricing'
 			},
-
-			// {
-			// 	path: 'FAQs',
-			// 	to: '/faqs'
-			// },
 		],
 	},
 	{
@@ -75,12 +70,6 @@ export const footerData = [
 				path: 'Sign In',
 				to: '/signin'
 			},
-			// {
-			// 	path: 'Services',
-			// 	to: '/services'
-			// },
-		
-		
 		] 
 	},
 	{
@@ -98,10 +87,6 @@ export const footerData = [
 				path: 'Feedback',
 				to: '/feedback'
 			},
-			// {
-			// 	path: 'Blog',
-			// 	to: '/blog'
-			// },
 		] 
 	},
 	{
@@ -119,10 +104,6 @@ export const footerData = [
 				path: 'Disclaimer',
 				to: '/disclaimer'
 			},
-			// {
-			// 	path: 'Report',
-			// 	to: '/report'
-			// },
 	] 
 	},
 ];

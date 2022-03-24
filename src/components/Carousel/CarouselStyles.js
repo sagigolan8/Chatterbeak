@@ -63,7 +63,6 @@ export const ReviewSlider = styled(Slider)`
 
 export const CardButton = styled.button`
 	cursor: default;
-	// background-color: #1d609c;
 	background-color: #fff;
 	font-size: 1.3rem;
 	padding: 5px 10px;
@@ -73,9 +72,4 @@ export const CardButton = styled.button`
 	margin: auto 0 0 0;
 	border: none;
 	border-radius: 0 0 10px 10px;
-
-	// &:hover {
-	// 	background-color: #112f4a;
-	// 	transition: background-color 0.2s ease-in;
-	// }
 `;

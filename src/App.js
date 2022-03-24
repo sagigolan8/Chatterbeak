@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import GlobalStyle from './globalStyles';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import GlobalStyle, { ScrollerDiv, ScrollerImg } from './globalStyles';
+import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 
 //Pages
-import Home from './pages/Home';
+// import Home from './pages/Home';
+import Home from './components/Home/Home';
 import SignUp from './components/SignUp/SignUp';
 import Pricing from './components/Pricing/Pricing';
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
@@ -18,23 +19,48 @@ import Profile from './components/Profile/Profile';
 import Meeting from './components/Meeting/Meeting';
 import Verification from './components/Verification/Verification';
 import { UserContext } from './components/Context/UserContext';
+import { checkToken, deleteCookie } from './services/request';
 // import Contact from './components/Contact/Contact'
 
 function App() {
 
-	const [user, setUser] = useState({
-		name:'Sagi Golan',
+	const initialState = { 
+		name:'',
 		email:'',
 		password:'',
-		id:'',
+		_id:'',
 		bgColor:'#969696',
 		color:'#fff'
-	});
+	}
+	const [user, setUser] = useState(initialState);
+
+	const [displayScroller, setDisplayScroller] = useState(false)
+	useEffect(()=>{
+		const onScroll = ()=>{
+			window.pageYOffset > 300
+			?
+			setDisplayScroller(true)
+			:
+			setDisplayScroller(false)
+		}
+		window.addEventListener('scroll',onScroll);
+		return () => window.removeEventListener('scroll', onScroll);
+	},[])
+	
+	const scrollTop = () => {
+		window.scrollTo({
+		top:0,
+		left:0,
+		behavior:"smooth",
+	    })   
+	}
+
+
 
 	return (
 		<Router>
 			<GlobalStyle />
-			<UserContext.Provider value={{ user }}>
+			<UserContext.Provider value={{ user, setUser, initialState }}>
 			<Navbar />
 			</UserContext.Provider>
 			<Switch>
@@ -42,9 +68,8 @@ function App() {
 				<Route path="/policy" exact component={PrivacyPolicy} />
 				<Route path="/terms" exact component={Terms} />
 				<Route path="/disclaimer" exact component={Disclaimer} />
-				{/* <Route path="/report" exact component={Report} /> */}
 				<Route path="/safety" exact component={Safety} />
-				<UserContext.Provider value={{ user, setUser }}>
+				<UserContext.Provider value={{ user, setUser, initialState }}>
 					<Route path="/signup" exact component={SignUp} />
 					<Route path="/verification" exact component={Verification} />
 					<Route path="/signin" exact component={SignIn} />
@@ -55,6 +80,9 @@ function App() {
 				</UserContext.Provider>
 					{/* <Route path="/contact" exact component={Contact} /> */}
 			</Switch>
+			<ScrollerDiv onClick={()=>scrollTop()} displayScroller={displayScroller}>
+				<ScrollerImg src="./assets/scrollUp.png" />
+			</ScrollerDiv>
 			<Footer />
 		</Router>
 	);
