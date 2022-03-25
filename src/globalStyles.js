@@ -39,6 +39,27 @@ const GlobalStyle = createGlobalStyle`
 #styled-avatar {
   border: 4px solid hsl(210, 30%, 0%);
 }
+/* transition animation between routes*/
+/* simple - enter transition 400ms, exit 200ms */
+.fade-appear,
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 400ms ease-in 200ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
 `;
 
 export const Container = styled.div`

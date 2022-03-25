@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Content } from '../Content/Content';
 import Features from '../Features/Features';
 import Carousel from '../Carousel/Carousel';
@@ -7,7 +7,6 @@ import { heroOne, heroTwo, heroThree } from '../../data/HeroData';
 import { WhyUsData } from '../../data/FeaturesData';
 
 const Home = () => {
-
 	return (
 		<>
 			<Hero  />

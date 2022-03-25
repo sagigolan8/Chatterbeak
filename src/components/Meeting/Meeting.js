@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import AgoraRTC from "agora-rtc-sdk-ng"
 import './style.scss'
-
 import{
     LegalSection,
     LegalHeaderWrapper,
@@ -10,7 +9,10 @@ import{
 import { UserContext } from '../Context/UserContext'
 import { getAgoraToken } from '../../services/request'
 import { Main, Container } from '../../globalStyles'
-import { FormButton, FormInput, FormLabel } from '../Form/FormStyles'
+import { FormButton, FormLabel } from '../Form/FormStyles'
+import { infoNotification } from '../../services/alerts'
+
+// stills in progress
 
 export default function Meeting() {
     const { user } = useContext(UserContext)
@@ -20,16 +22,14 @@ export default function Meeting() {
     const audioRef = useRef()
     const leaveRef = useRef()
 
-
 //#1
 let client = AgoraRTC.createClient({mode:'rtc', codec:"vp8"})
 
-AgoraRTC.setLogLevel(4) //stops agora logs
 
 //#2
 let config = {
   appid:'ee8c78bbbb69425f8a9ab38fc1914a71',
-  token: null, // => will be defined by function getAgoraToken
+  token: null, // => value will change by function getAgoraToken
   uid:null,  // => created by agora if not given
   channel:'chatroom',
 }
@@ -49,10 +49,15 @@ let localTrackState = {
 //#5 - Set remote tracks to store other users
 let remoteTracks = {}
   useEffect(()=>{
+      
+    AgoraRTC.setLogLevel(4) //stops agora logs
 
     window.scrollTo(0, 0)
 
     document.getElementById('join-btn').addEventListener('click', async () => {
+        if(!document.cookie){
+            return infoNotification('In order to get in the stream you must sign in first','top-center')
+        }
         const res = await getAgoraToken() 
         console.log(res)
         config.token = res 
@@ -225,6 +230,7 @@ return () => {
     </LegalHeaderWrapper>
     <Container>
         <LegalCardSubText>
+
     <Main className='main-meeting-container'>
 
         {/* <div id="join-wrapper">

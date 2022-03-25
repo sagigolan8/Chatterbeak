@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ColorModal({openModal,setOpenModal}) {
   
-  const { user, setUser } = React.useContext(UserContext) 
+  const { user } = React.useContext(UserContext) 
 
   React.useEffect(()=>{ 
     if(openModal)
@@ -99,7 +99,6 @@ export default function ColorModal({openModal,setOpenModal}) {
           <div>
           Text color - <input onChange={()=>colorSelected()} id="colorize-text"type="color"/>
         </div>
-         
         </DialogContent>
         <DialogActions >
           <div className="all">

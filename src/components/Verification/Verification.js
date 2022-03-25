@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
 import { Button } from '../../globalStyles'
 import { errorNotification, infoNotification, niceAlert } from '../../services/alerts'
 import { checkOtp, sendOtpAgain, validateSignIn } from '../../services/request'
@@ -20,7 +19,7 @@ export default function Verification() {
       if(!user.name){
         history.push('/')
     }
-        infoNotification('You have 10 minutes to complete the verification ','bottom-right')
+      infoNotification('You have 10 minutes to complete the verification ','bottom-right')
 
         const inputs = document.querySelectorAll('.input-form')
         inputs[0].focus()
@@ -127,7 +126,7 @@ export default function Verification() {
               niceAlert('Welcome to Chatterbeak!',1500,'success')
               await validateSignIn({ email: user.email, password: user.email })
               history.push('/signup')
-              localStorage.removeItem('signup')
+              // localStorage.removeItem('signup')
             }
             else if(result.error.includes('10 minutes')){
               niceAlert(result.error,3500)
@@ -141,7 +140,7 @@ export default function Verification() {
   return (
     <LegalSection background>
       <div className="verification">
-          <ToastContainer />
+          {/* <ToastContainer /> */}
               <h1 className="verification-header">Code Verification</h1>
               <h3 className="verification-subheader">Verification code just sent to your email please paste it here</h3>
           <form onSubmit={(e)=>verifyOtp(e)} onInput={(e)=>handleInput(e)} className="verification-form" action="#"> 
@@ -157,11 +156,11 @@ export default function Verification() {
                   <Button type="submit" className="otp-btn">Check</Button>
                   <Button type="reset" className="otp-btn">Reset</Button>
                   <div className="send-again-wrapper">
-                  <a 
+                  <span
                     onClick={()=>{
                       sendOtpAgain(user)
                       infoNotification('verification code sent to your email','bottom-right')
-                    }} className='send-again-link'>send again?</a>
+                    }} className='send-again-link'>send again?</span>
                   </div>
               </div>
             </form>

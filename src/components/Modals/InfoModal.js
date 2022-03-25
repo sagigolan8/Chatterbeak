@@ -9,8 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
-import { UserContext } from '../Context/UserContext';
-import { updateProfile } from '../../services/request';
+import { motion } from 'framer-motion';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -59,7 +58,6 @@ export default function InfoModal({
   inverse
 }) {
   
-  const { user } = React.useContext(UserContext) 
   const [open, setOpen] = React.useState(false);
   const [theme, setTheme] = React.useState({border:'none'})
 
@@ -73,17 +71,26 @@ export default function InfoModal({
   },[openModal])
 
 
+  const initial = {
+		y: 0,
+		opacity: 0,
+	};
+
+  const animate = {
+		y: 0,
+		opacity: 1,
+	};
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = async () => {
     setOpen(false);
     setOpenModal(false)
-    await updateProfile(user)
   };
 
   return (
-    <div> 
+    <div > 
       <span variant="outlined" onClick={handleClickOpen}>
       </span>
         <BootstrapDialog 
@@ -91,7 +98,18 @@ export default function InfoModal({
           aria-labelledby="customized-dialog-title"
           open={open}
         >
-          <BootstrapDialogTitle style={theme} id="customized-dialog-title" onClose={handleClose} >
+          <motion.div
+            initial={initial}
+            transition={{ delay: 0.2, duration:0.3 }}
+            animate={animate}
+          >
+          <BootstrapDialogTitle 
+             
+            style={theme} 
+            id="customized-dialog-title" 
+            onClose={handleClose}
+
+            >
           <span style={{position: 'absolute',top:'10px'}} >{icon}</span>
           <span style={{fontSize:'1.6rem',fontWeight:'700',marginLeft:'65px'}}>{headline}</span>
           </BootstrapDialogTitle>
@@ -106,6 +124,7 @@ export default function InfoModal({
               ✔
             </Button>
           </DialogActions>
+          </motion.div>
         </BootstrapDialog>
     </div>
   );

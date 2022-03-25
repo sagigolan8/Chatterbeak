@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Button } from '../../globalStyles';
 
 export const PricingSection = styled.div`
 	padding: 160px 0;
@@ -63,7 +63,7 @@ export const PricingCardInfo = styled.div`
 	padding: 24px;
 	color: #fff;
 	margin: auto;
-	> button {
+	> a {
 		margin-top: auto;
 
 		&:hover {
@@ -118,6 +118,44 @@ font-size: 0.92rem;
 	margin-right: 0.4rem;
 }
 `;
+
+
 export const PriceLink = styled.a`
-	display:none;
+text-decoration: none;
+border-radius: 4px;
+background: none;
+white-space: nowrap;
+padding: 10px 20px;
+font-size: 16px;
+font-weight: 500;
+color: #fff;
+outline: none;
+border: 2px solid #fff;
+cursor: pointer;
+overflow: hidden;
+position: relative;
+text-align: center;
+
+&:before {
+	background: #fff;
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	transition: all 0.4s ease;
+	width: 100%;
+	height: 0%;
+	transform: ${({ contrast }) => (contrast ? 'translate(-50%, -50%) rotate(45deg)' : 'translate(-50%, -50%) rotate(-45deg)')};
+
+}
+
+&:hover:before {
+	height: 500%;
+}
+
+&:hover {
+	color: black;
+}
 `;

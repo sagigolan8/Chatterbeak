@@ -16,18 +16,17 @@ import {
 } from '../Form/FormStyles';
 import { Container } from '../../globalStyles';
 import { Checkbox } from '@mui/material';
-import { Redirect, useHistory } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 import { errorNotification } from '../../services/alerts';
 import { UserContext } from '../Context/UserContext';
 import { deleteCookie, validateSignUp } from '../../services/request';
 
 const SignUp = () => {
-    const { user, setUser, initialState } = useContext(UserContext) 
+    const { user, setUser, initialState} = useContext(UserContext) 
 	const termsRef = useRef()
 	const history = useHistory()
 	useEffect(()=>{
-		window.scrollTo(0, window.innerHeight*0.15)
+		window.scrollTo(0, 0)
 	},[])
 
 	const [name, setName] = useState('');
@@ -35,8 +34,6 @@ const SignUp = () => {
 	const [password, setPassword] = useState('');
 	const [terms, setTerms] = useState('');
 	const [confirmPass, setConfirmPass] = useState('');
-	// const [error, setError] = useState(null);
-	// const [success, setSuccess] = useState(null);
 
 	const handleLogOut = (id) => {
 		setUser(initialState)
@@ -50,7 +47,7 @@ const SignUp = () => {
 		if (resultError) {
 			return errorNotification(resultError,'top-center')
 		}
-        localStorage.setItem('signup',true)
+        // localStorage.setItem('signup',true)
 		setUser({
 			...user,
 			name,
@@ -124,7 +121,7 @@ const SignUp = () => {
 								{success}
 							</>
 						)} */}
-					<ToastContainer/>
+					{/* <ToastContainer/> */}
 				</FormColumn>
 				}
 				</FormRow>

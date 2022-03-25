@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { errorNotification, infoNotification, niceAlert } from "../../services/alerts";
 import { UserContext } from "../Context/UserContext";
 import { FeedbackButton } from "./FeedbackStyles";
@@ -10,24 +9,24 @@ export default function App() {
   const { user } = useContext(UserContext) 
   const history = useHistory()
   const textAreaRef = useRef()
-  const [allowEdit, setAllowEdit] = useState({pointerEvents: 'none'})
+  const [allowEdit, setAllowEdit] = useState({pointerEvents: 'auto'})
 
   useEffect(()=>{
-    window.scrollTo(0, 0)
-    if(user._id){
+    if(user.name){
       setAllowEdit({pointerEvents: 'auto'})
     }
     else{
       setAllowEdit({pointerEvents: 'none'})
       infoNotification('In order to get access to our system you have to sign in','top-center')
     }
+    window.scrollTo(0, 0)
   },[])
 
   const checkRating = () =>{
     let rating 
       for (const item of document.querySelectorAll('.rates')) {
           if(item.checked && textAreaRef.current.value){
-              rating = Number(item.id.slice(7));
+              rating = Number(item.id.slice(7)); // => number of stars
               textAreaRef.current.value = ''
               niceAlert('Thank you!',2000,'success')
               return history.push('/')
@@ -38,7 +37,6 @@ export default function App() {
 
   return (
   <>
-    <ToastContainer/>
     <div style={allowEdit} className="container-feedback">
       <div className="feedback">
         <div className="rating">

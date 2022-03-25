@@ -12,19 +12,14 @@ import {
 	// FormLink, // => forgot password
 } from '../Form/FormStyles';
 import { Container } from '../../globalStyles';
-import { useHistory } from 'react-router-dom';
 import { errorNotification, niceAlert } from '../../services/alerts';
-import { ToastContainer } from 'react-toastify';
 import { UserContext } from '../Context/UserContext';
 import { validateSignIn } from '../../services/request';
 const SignIn = () => {
-	const history = useHistory()
-    const { user, setUser, initialState } = useContext(UserContext) 
-	
-
+    const { user, setUser} = useContext(UserContext) 
 
 	useEffect(()=>{
-		window.scrollTo(0, window.innerHeight*0.1)
+		window.scrollTo(0, 0)
 	},[])
 
 	const [email, setEmail] = useState('');
@@ -42,11 +37,6 @@ const SignIn = () => {
 		setEmail('');
 		setPassword('');
 
-	};
-
-	const messageVariants = {
-		hidden: { y: 30, opacity: 0 },
-		animate: { y: 0, opacity: 1, transition: { delay: 0.2, duration: 0.4 } },
 	};
 
 	const formData = [
@@ -67,7 +57,7 @@ const SignIn = () => {
 						user.name
 						?
 						<FormColumn small>
-							<FormTitle>You are successfully logged in </FormTitle>
+							<FormTitle> You are successfully signed in </FormTitle>
 						</FormColumn>
 						:
 						<FormColumn small>
@@ -87,7 +77,7 @@ const SignIn = () => {
 							{/* <FormLink to="/" >forgot password?</FormLink> */}
 							<FormButton type="submit">Sign In</FormButton>
 						</FormWrapper>
-							<ToastContainer/>
+							{/* <ToastContainer/> */}
 					</FormColumn>
 					}
 					

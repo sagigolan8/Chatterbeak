@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Heading, TextWrapper } from '../../globalStyles';
 import { IconContext } from 'react-icons/lib';
 import {
@@ -19,7 +19,7 @@ import { pricingData } from '../../data/PricingData';
 function Pricing() {
 
 	useEffect(()=>{
-		window.scrollTo(0, window.innerHeight*0.1)
+		window.scrollTo(0,window.innerHeight*0.14)
 	},[])
 
 	return (
@@ -51,12 +51,12 @@ function Pricing() {
 											</PricingCardFeature>
 										))}
 									</PricingCardFeatures>
-										<Button
+										{/* <Button
 											onClick={()=>document.getElementById(card.title).click()}
 										>
 										Get Started
-										</Button>
-										<PriceLink id={card.title} href={card.to} target={card.blank}></PriceLink>
+										</Button> */}
+										<PriceLink id={card.title} href={card.to} target={card.blank}>Get Started</PriceLink>
 										
 								</PricingCardInfo>
 							</PricingCard>

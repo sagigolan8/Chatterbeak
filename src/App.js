@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import GlobalStyle, { ScrollerDiv, ScrollerImg } from './globalStyles';
-import { BrowserRouter as Router, Switch, Route, useHistory } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
+import { Switch, Route, useLocation } from 'react-router-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import AgoraRTC from "agora-rtc-sdk-ng"
 
 //Pages
-// import Home from './pages/Home';
+import Navbar from './components/Navbar/Navbar';
 import Home from './components/Home/Home';
 import SignUp from './components/SignUp/SignUp';
 import Pricing from './components/Pricing/Pricing';
@@ -19,11 +20,10 @@ import Profile from './components/Profile/Profile';
 import Meeting from './components/Meeting/Meeting';
 import Verification from './components/Verification/Verification';
 import { UserContext } from './components/Context/UserContext';
-import { checkToken, deleteCookie } from './services/request';
+import { ToastContainer } from 'react-toastify';
 // import Contact from './components/Contact/Contact'
 
 function App() {
-
 	const initialState = { 
 		name:'',
 		email:'',
@@ -33,9 +33,13 @@ function App() {
 		color:'#fff'
 	}
 	const [user, setUser] = useState(initialState);
-
 	const [displayScroller, setDisplayScroller] = useState(false)
+	const location = useLocation()
+	const nodeRef = useRef()
+
 	useEffect(()=>{
+		AgoraRTC.setLogLevel(4) //stops agora logs
+		
 		const onScroll = ()=>{
 			window.pageYOffset > 300
 			?
@@ -44,7 +48,9 @@ function App() {
 			setDisplayScroller(false)
 		}
 		window.addEventListener('scroll',onScroll);
-		return () => window.removeEventListener('scroll', onScroll);
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+		}
 	},[])
 	
 	const scrollTop = () => {
@@ -55,36 +61,49 @@ function App() {
 	    })   
 	}
 
-
-
 	return (
-		<Router>
+		<>
+			<ToastContainer/>
 			<GlobalStyle />
 			<UserContext.Provider value={{ user, setUser, initialState }}>
 			<Navbar />
 			</UserContext.Provider>
-			<Switch>
-				<Route path="/" exact component={Home} />
-				<Route path="/policy" exact component={PrivacyPolicy} />
-				<Route path="/terms" exact component={Terms} />
-				<Route path="/disclaimer" exact component={Disclaimer} />
-				<Route path="/safety" exact component={Safety} />
-				<UserContext.Provider value={{ user, setUser, initialState }}>
-					<Route path="/signup" exact component={SignUp} />
-					<Route path="/verification" exact component={Verification} />
-					<Route path="/signin" exact component={SignIn} />
-					<Route path="/meeting" exact component={Meeting} />
-					<Route path="/profile" exact component={Profile} />
-					<Route path="/feedback" exact component={Feedback} />
-					<Route path="/pricing" exact component={Pricing} />
-				</UserContext.Provider>
-					{/* <Route path="/contact" exact component={Contact} /> */}
-			</Switch>
+			<TransitionGroup>
+				<CSSTransition
+				  timeout={400}
+				  classNames="fade"
+				  key={location.key}
+//nodeRef={nodeRef}// =>Fix the findDOMNode error but disable the fade animation. Solution:delete React.StrictMode 
+				>
+					<Switch>
+						<Route location={location}  path="/" exact component={Home} />
+						<Route location={location} path="/policy" exact component={PrivacyPolicy} />
+						<Route location={location}  path="/terms" exact component={Terms} />
+						<Route location={location} path="/disclaimer" exact component={Disclaimer} />
+						<Route location={location} path="/safety" exact component={Safety} />
+						<UserContext.Provider value={{ user, setUser, initialState }}>
+							<Route location={location} path="/signup" exact component={SignUp} />
+							<Route location={location} path="/verification" exact component={Verification} />
+							<Route location={location} path="/signin" exact component={SignIn} />
+							<Route location={location} path="/meeting" exact component={Meeting} />
+							<Route location={location} path="/profile" exact component={Profile} />
+							<Route location={location} path="/feedback" exact component={Feedback} />
+							<Route location={location} path="/pricing" exact component={Pricing} />
+						</UserContext.Provider>
+						{/* <Route component={Pricing} /> */}
+						<Route path='*' exact={true} component={Pricing} />
+							{/* <Route path="*">
+								<div>Not found</div>
+							</Route> */}
+							{/* <Route path="/contact" exact component={Contact} /> */}
+					</Switch>
+				</CSSTransition>
+			</TransitionGroup>
 			<ScrollerDiv onClick={()=>scrollTop()} displayScroller={displayScroller}>
 				<ScrollerImg src="./assets/scrollUp.png" />
 			</ScrollerDiv>
 			<Footer />
-		</Router>
+			</>
 	);
 }
 

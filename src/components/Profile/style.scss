@@ -111,7 +111,7 @@ body {
   }
 }
 /* make a grid */
-.wrapper-profile {
+.wrapper-profile-content {
   max-width: 940px;
   margin: 0 auto;
   display: grid;
@@ -119,7 +119,7 @@ body {
   grid-gap: 10px;
 }
 
-.wrapper-profile > * {
+.wrapper-profile-content > * {
   background: #242424;
   box-shadow: 0 4px 8px rgba(56, 125, 255, 20%);
   color: #fff;
@@ -143,7 +143,7 @@ body {
 
 /* We need to set the widths used on floated items back to auto, and remove the bottom margin as when we have grid we have gaps. */
 @supports (display: grid) {
-  .wrapper-profile > * {
+  .wrapper-profile-content > * {
     width: auto;
     margin: 0;
   }
@@ -353,7 +353,7 @@ body {
     font-size: 4px;
   }
   .wrapper {
-    width: 200%;
+    width: 180%;
   }
   .middle-pass {
     letter-spacing: 4px;
@@ -365,7 +365,7 @@ body {
     font-size: 4px;
   }
   .wrapper {
-    width: 250%;
+    width: 180%;
   }
 }
 @media screen and (max-width: 290px) {
@@ -373,7 +373,7 @@ body {
     font-size: 3px;
   }
   .wrapper {
-    width: 230%;
+    width: 180%;
   }
 }
 

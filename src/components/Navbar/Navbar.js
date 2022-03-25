@@ -22,24 +22,28 @@ import { checkToken, deleteCookie } from '../../services/request.js';
 
 const Navbar = () => {
 	const { user, setUser, initialState } = useContext(UserContext)
-	let history = useHistory();
+	const history = useHistory();
 	const navRef = useRef()
 	const [inverse, setInverse] = useState(true)
 	const [inverseHover, setInverseHover] = useState(true)
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
-		const connectUserByToken = async () => {
+		const connectUserByToken = async (path=history.location.pathname) => {
 			console.log('check token')
-			const userData = await checkToken(document.cookie)
-			if(userData.error){
+			const userData = await checkToken(document.cookie,path)
+			if(userData.verify){
+				return
+			}
+			if(userData.error){// => check all the time except the signup some user
 				setUser(initialState)
 				return handleLogOut(user._id,'tokenCheck') 
 			}
 			return setUser(userData)
 		}
 		connectUserByToken()
-			history.listen( async () => !localStorage.getItem('signup') ?  await connectUserByToken() : '');
+
+		history.listen( async () => await connectUserByToken(history.location.pathname));
 
         const onScroll = () => displayNavBackground()
 
@@ -68,7 +72,7 @@ const Navbar = () => {
 	};
 
 
-	const closeMobileMenu = (to, id,{ target: { parentElement } }) => {
+	const closeMobileMenu = (to) => {
 		history.push(to);
 		setShow(false);
 	};
@@ -86,7 +90,7 @@ const Navbar = () => {
 		<Nav ref={navRef}>
 				<NavbarContainer>
 					{
-						user.name && !localStorage.getItem('signup')
+						user.name 
 						?
 					<NavLogOut>
 					<BiLogOut onClick={()=>handleLogOut(user._id)} style={{cursor:'pointer',fontSize:'26px'}} />
@@ -99,7 +103,7 @@ const Navbar = () => {
 					</NavLogo> 
 						<NavUser href="/profile">
 							{
-								user.name && !localStorage.getItem('signup') ? `🟢 ${user.name}` : ''
+								user.name ? `🟢 ${user.name}` : ''
 							}
 							</NavUser>
 					<MobileIcon onClick={handleClick}>

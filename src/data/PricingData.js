@@ -11,7 +11,7 @@ export const pricingData = [
 	},
 	{
 		title: 'Standard',
-		price: '$18.99 All the benefits of Basic, plus:',
+		price: '$9.99 All the benefits of Basic, plus:',
 		features: [
 			'Host up to 300 participants',
 			'Social media streaming',
@@ -22,9 +22,9 @@ export const pricingData = [
 	},
 	{
 		title: 'Premium',
-		price: '$32.50 All the benefits of Standard, plus:',
+		price: '$19.99 All the benefits of Standard, plus:',
 		features: [
-			'Host up to 500 participants',
+			'Host up to 600 participants',
 			'Recording transcripts',
 			'Managed domains',
 		],
@@ -34,7 +34,7 @@ export const pricingData = [
 
 	{
 		title: 'Enterprise',
-		price: '$55.50 All the benefits of Premium, plus:',
+		price: '$29.99 All the benefits of Premium, plus:',
 		features: [
 			'Host up to 900 participants',
 			'Unlimited cloud storage',

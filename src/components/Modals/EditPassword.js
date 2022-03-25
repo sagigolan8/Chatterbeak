@@ -11,8 +11,6 @@ import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
 import { errorNotification, successNotification } from '../../services/alerts';
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { checkPassword, setNewPassword } from '../../services/request';
 
 
@@ -164,17 +162,6 @@ export default function EditPassword({user}) {
             ✔
           </Button>
         </DialogActions>
-        <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        />
       </BootstrapDialog>
     </div>
   );

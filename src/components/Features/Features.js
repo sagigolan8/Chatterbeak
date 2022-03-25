@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { useAnimation } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { Container, Section } from '../../globalStyles';
 import InfoModal from '../Modals/InfoModal';
 import {
@@ -19,10 +21,28 @@ const Features = ({featuresData,header,inverse}) => {
 		y: 40,
 		opacity: 0,
 	};
-	const animate = {
-		y: 0,
-		opacity: 1,
-	};
+
+	const animation = useAnimation();
+	const { ref, inView } = useInView({ threshold: 0.2 });
+
+	useEffect(() => {
+		if (inView) {
+			animation.start({
+				opacity: 1,
+				y: 0,
+			});
+			return;
+		}
+
+		animation.start({
+			opacity: 0,
+			y: 30,
+			transition: {
+				duration: 0.2,
+			}
+		});
+	}, [inView, animation]);
+
 	const showDescription = (headline,text,icon) =>{
 		setOpenModal(!openModal)
 		setHeadline(headline)
@@ -36,13 +56,14 @@ const Features = ({featuresData,header,inverse}) => {
 				<FeatureTextWrapper>
 					<FeatureTitle>{header}</FeatureTitle>
 				</FeatureTextWrapper>
-				<FeatureWrapper >
+				<FeatureWrapper ref={ref} >
 					{featuresData.map((el, index) => (
-						<FeatureColumn 
+						<FeatureColumn
+							
 							onClick={()=> showDescription(el.name,el.description,el.icon)}
 							inverse={inverse}
 							initial={initial}
-							animate={animate}
+							animate={animation}
 							transition={{ duration: 0.5 + index * 0.1 }}
 							key={index}
 							>

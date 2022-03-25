@@ -93,9 +93,9 @@ export const getAgoraToken = async () => {
     }
 }
 
-export const checkToken = async (token) => { //Check of cookie exist 
+export const checkToken = async (token, path) => { //Check of cookie exist 
     try{
-        const { data } = await axios.get(`${baseUrl}/token`,{ 
+        const { data } = await axios.post(`${baseUrl}/token`,{ path },{ 
             headers: {
                 Authorization: `Bearer ${token}`
             }
