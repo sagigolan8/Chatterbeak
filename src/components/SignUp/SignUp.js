@@ -26,7 +26,13 @@ const SignUp = () => {
 	const termsRef = useRef()
 	const history = useHistory()
 	useEffect(()=>{
-		window.scrollTo(0, 0)
+		setTimeout(() => {
+			window.scrollTo({
+				top:window.innerHeight*0.13,
+				left:0,
+				behavior:"smooth",
+				})
+		}, 700);
 	},[])
 
 	const [name, setName] = useState('');

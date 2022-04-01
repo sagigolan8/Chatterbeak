@@ -15,7 +15,11 @@ export default function Verification() {
     useEffect(()=>{
       console.log(user)
       console.log(localStorage.getItem('signup'))
-      window.scrollTo(0, window.innerHeight*0.1)
+      window.scrollTo({
+        top: window.innerHeight*0.1,
+        left:0,
+        behavior:"smooth",
+      })   
       if(!user.name){
         history.push('/')
     }

@@ -16,6 +16,11 @@ text-align: center;
 width: 100px;
 position: absolute;
 bottom: 22px;
+transition: all 0.4s linear; /* vendorless fallback */
+-o-transition: all 0.4s linear; /* opera */
+-ms-transition: all 0.4s linear; /* IE 10 */
+-moz-transition: all 0.4s linear; /* Firefox */
+-webkit-transition: all 0.4s linear; /*safari and chrome */
 
 &:before {
     background: #fff;

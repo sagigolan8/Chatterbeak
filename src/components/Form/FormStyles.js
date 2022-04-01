@@ -148,10 +148,11 @@ export const FormButton = styled.button`
 	border: 2px solid #afafaf;
 	position: relative;
 	overflow: hidden;
-
-	&:focus{
-		border: 4px solid #00237cb8;
-	}
+	transition: all 0.4s linear; /* vendorless fallback */
+	-o-transition: all 0.4s linear; /* opera */
+	-ms-transition: all 0.4s linear; /* IE 10 */
+	-moz-transition: all 0.4s linear; /* Firefox */
+	-webkit-transition: all 0.4s linear; /*safari and chrome */
 
 	&:hover {
 		cursor: pointer;
@@ -170,6 +171,8 @@ export const FormConfirmation = styled.p`
 `
 
 export const FormConfirmationWrapper = styled.div`
+z-index: -1000;
+
 	color: #afafaf;
 	@media screen and (max-width: 471px) {
 		font-size: .84rem;
@@ -207,6 +210,8 @@ export const FormLogOutButton = styled.div`
 	background: -webkit-linear-gradient(to left, #8E0E00, #1F1C18);
 	background: linear-gradient(to left, #8E0E00, #1F1C18);
 	box-shadow: 3px 2px 3px rgb(255 255 255 / 41%);
+	transition: all 0.4s linear; /* opera */
+	
 	&:hover{
 		transform: scale(1.15);
 		transition: all 0.3s ease-out;

@@ -19,7 +19,11 @@ import { pricingData } from '../../data/PricingData';
 function Pricing() {
 
 	useEffect(()=>{
-		window.scrollTo(0,window.innerHeight*0.14)
+		window.scrollTo({
+			top:window.innerHeight*0.14,
+			left:0,
+			behavior:"smooth",
+			})
 	},[])
 
 	return (

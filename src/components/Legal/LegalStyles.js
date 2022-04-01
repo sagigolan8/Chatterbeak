@@ -20,6 +20,16 @@ export const LegalHeading = styled.h1`
 `
 
 export const LegalSubHeader = styled.span`
+@media screen and (max-width: 630px) {
+	font-size: 90%;
+}
+@media screen and (max-width: 500px) {
+	font-size: 80%;
+}
+@media screen and (max-width: 400px) {
+	font-size: 70%;
+	word-break: break-word;
+}
 `
 
 export const LegalBold = styled.b`
@@ -31,6 +41,15 @@ export const LegalContent = styled.span`
 
 export const LegalParagraph = styled.p`
 	color: #c6c5c5b0;
+	@media screen and (max-width: 630px) {
+		font-size: 90%;
+	}
+	@media screen and (max-width: 500px) {
+		font-size: 80%;
+	}
+	@media screen and (max-width: 400px) {
+		font-size: 70%;
+	}
 `
 
 
@@ -82,6 +101,13 @@ export const LegalCardSubText = styled.div`
 
 	@media screen and (max-width: 768px) {
 		width: 90%;
+
+		&:hover {
+			transform: none;
+		}
+	}
+	@media screen and (max-width: 550px) {
+		width: 100%;
 
 		&:hover {
 			transform: none;

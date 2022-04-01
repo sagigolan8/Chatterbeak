@@ -153,11 +153,13 @@ export const FooterSocialIcon = styled.a`
 `;
 
 export const FooterAddress = styled.div`
+	display: flex;
+    justify-content: center;
 	color: white;
 	margin: 0.4rem auto 0.4rem;
 	max-width: 24rem;
-	font-weight: 500;
-	font-size: 0.875rem;
+	font-weight: 600;
+	font-size: 1rem;
 	line-height: 2;
 	text-align: center;
 

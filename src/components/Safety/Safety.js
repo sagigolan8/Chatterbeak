@@ -6,9 +6,11 @@ import { SafetyData } from '../../data/FeaturesData';
 import { Modal } from '@mui/material';
 const Safety = () => {
 	useEffect(()=>{
-
-		window.scrollTo(0, 0)
-
+    window.scrollTo({
+      top: window.innerHeight*0.1,
+      left:0,
+      behavior:"smooth",
+    })   
 	},[])
 
 	return (

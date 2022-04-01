@@ -10,6 +10,9 @@ import { Button} from '@mui/material';
 import { GrClose } from 'react-icons/gr';
 import './style.scss'
 import { motion } from 'framer-motion';
+import { FaDownload } from 'react-icons/fa';
+import { saveAs } from 'file-saver';
+import '.././Team/style.css'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -27,7 +30,7 @@ const BootstrapDialogTitle = (props) => {
     <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
       {children}
       {onClose ? (
-        <IconButton
+        <IconButton 
           aria-label="close"
           onClick={onClose}
           sx={{
@@ -37,7 +40,7 @@ const BootstrapDialogTitle = (props) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-        <GrClose/>
+        < GrClose />
         </IconButton>
       ) : null}
     </DialogTitle>
@@ -49,27 +52,9 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function InfoModal({
-  openModal,
-  setOpenModal,
-  headline,
-  text,
-  icon,
-  inverse
-}) {
+export default function CVModal() {
   
   const [open, setOpen] = React.useState(false);
-  const [theme, setTheme] = React.useState({border:'none'})
-
-  React.useEffect(()=>{ 
-    if(openModal){
-      setOpen(openModal)
-    }
-    if(inverse){
-      setTheme({background:'#242424',color:'#fff',border:'none'})
-    }
-  },[openModal])
-
 
   const initial = {
 		y: 0,
@@ -84,13 +69,22 @@ export default function InfoModal({
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const handleClose = async () => {
+  const handleClose = () => {
     setOpen(false);
-    setOpenModal(false)
   };
 
+  const downloadCV = () =>{
+    saveAs("assets/Sagi Golan CV.pdf", "Sagi Golan CV.pdf");
+  }
+
   return (
-    <div > 
+    <div>
+      <div className="container-team-wrapper">
+    <div onClick={handleClickOpen} className="container-team" >
+	<img className='img-team' src="OurTeam.png" />
+	<div className="title">Sagi Golan</div>
+    </div>
+    </div> 
       <span variant="outlined" onClick={handleClickOpen}>
       </span>
         <BootstrapDialog 
@@ -104,23 +98,21 @@ export default function InfoModal({
             animate={animate}
           >
           <BootstrapDialogTitle 
-             
-            style={theme} 
+            style={{textAlign:'center',fontWeight:'600',fontSize:'clamp(1rem,3vw,1.5rem)',background:'#242424',color:'#fff',border:'none'}} 
             id="customized-dialog-title" 
             onClose={handleClose}
-
             >
-          <span style={{position: 'absolute',top:'10px'}} >{icon}</span>
-          <span style={{fontSize:'1.6rem',fontWeight:'700',marginLeft:'65px'}}>{headline}</span>
+            Sagi Golan CV 
+            <p style={{fontSize:'clamp(.5rem,1vw,.7rem)',textAlign:'center'}}>(Improved Quality Following Download)</p>
           </BootstrapDialogTitle>
-          <DialogContent style={theme} dividers>
-            <div>
-          <p style={{fontSize:'1.3rem',fontWeight:'500'}}>{text}</p>
-           </div>
-           
+          <DialogContent style={{background:'#242424',color:'#fff',border:'none'}} dividers>
+            <img style={{maxWidth:'100%'}} src="./assets/Sagi-Golan-CV-PS.png" alt="sagi-golan-cv" />
           </DialogContent>
-          <DialogActions style={theme}>
-            <Button style={{fontSize:'30px'}} onClick={handleClose}>
+          <DialogActions style={{background:'#242424',color:'#fff',border:'none'}}>
+            <Button onClick={()=>downloadCV()} style={{fontSize:'30px',color:'#fff'}}>
+            <FaDownload/>
+            </Button>
+            <Button style={{fontSize:'30px',color:'#fff'}} onClick={handleClose}>
               ✔
             </Button>
           </DialogActions>

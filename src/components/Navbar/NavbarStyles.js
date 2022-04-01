@@ -56,6 +56,11 @@ export const NavLogo = styled(Link)`
 export const NavIcon = styled.img`
 margin-left: -3rem;
 width: 14rem;
+transition: all 0.2s ease;
+&:hover{
+	transition: all 0.4s ease;
+	transform: scale(1.2)	
+}
 @media screen and (max-width: 450px) {
 	width: 10rem;
 }
@@ -145,9 +150,11 @@ height: 30px;
 	height: 100%;
 	font-size: 15spx;
 	font-weight: 500;
+	transition: all 0.2s linear;
 	&:hover {
 		color: ${({ inverseHover }) => ( inverseHover ? '#c8c9d8' : '#6fd0f6')};
 		transition: all 0.2s ease-out;
+		transform: scale(1.17);
 	}
 	
 	@media screen and (max-width: 1250px) { 
@@ -189,6 +196,7 @@ height: 30px;
 	
 	
 	export const NavUser = styled.a`
+	text-transform: capitalize;
 	white-space: nowrap;
 	font-size: 1rem;
 	color: #fff;
@@ -199,20 +207,26 @@ height: 30px;
 	color: #2dd580de;
 	cursor: pointer;
 	text-decoration: none;
+	transition: all 0.4s linear; /* vendorless fallback */
+
 	&:hover{
 		opacity:0.85;
-		transform: scale(1.04);
-		transition: opacity 0.5s ease;
+		transform: scale(1.06);
+		transition: all 0.5s ease;
 	}
 	@media screen and (max-width: 410px) {
 		font-size: .6rem;
 		justify-content: center;
 		white-space: normal;
 	}
-	@media screen and (max-width: 350px) {
+	@media screen and (max-width: 390px) {
 		font-size: .6rem;
 		justify-content: flex-end;
 		white-space: normal;
+		padding-bottom: 20px;
+	}
+	@media screen and (max-width: 330px) {
+		padding-bottom: 0;
 	}
 	`;
 
@@ -222,9 +236,12 @@ height: 30px;
 		justify-content: center;
 		flex-wrap: wrap;
 		align-content: center;
-		> :first-child:hover{
-			opacity:0.85;
-			transform: scale(1.04);
-			transition: opacity 0.5s ease;
+		> :first-child{
+			&:hover{
+				opacity:0.85;
+				transform: scale(1.25);
+				transition: all 0.4s ease;
+			}
+			transition: all 0.4s linear; /* vendorless fallback */
 		}
 	`;

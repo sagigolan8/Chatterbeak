@@ -44,6 +44,8 @@ export const PricingContainer = styled.div`
 `;
 
 export const PricingCard = styled.div`
+	transition: all 0.4s linear; /* vendorless fallback */
+
 	&:hover {
 		transform: scale(1.12);
 		transition: all 0.3s ease-out;
@@ -57,6 +59,7 @@ export const PricingCardInfo = styled.div`
 	text-decoration: none;
 	border-radius: 4px;
 	height: 100%;
+
 
 	display: flex;
 	flex-direction: column;
@@ -135,6 +138,7 @@ cursor: pointer;
 overflow: hidden;
 position: relative;
 text-align: center;
+transition: all 0.4s linear; /* vendorless fallback */
 
 &:before {
 	background: #fff;

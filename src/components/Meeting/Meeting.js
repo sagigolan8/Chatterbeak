@@ -52,7 +52,11 @@ let remoteTracks = {}
       
     AgoraRTC.setLogLevel(4) //stops agora logs
 
-    window.scrollTo(0, 0)
+    window.scrollTo({
+        top: 0,
+        left:0,
+        behavior:"smooth",
+      })   
 
     document.getElementById('join-btn').addEventListener('click', async () => {
         if(!document.cookie){
@@ -131,11 +135,12 @@ let joinStreams = async () => {
 
 
     client.enableAudioVolumeIndicator(); // Triggers the "volume-indicator" callback event every two seconds.
-    client.on("volume-indicator", function(evt){
+    client.on("volume-indicator", (evt) => {
+        console.log(evt)
         for (let i = 0; evt.length > i; i++){
             let speaker = evt[i].uid
             let volume = evt[i].level
-            if(volume > 0 ){
+            if(volume > 0.3 ){
                 document.getElementById(`volume-${speaker}`).src = './assets/volume-on.svg'
             }else{
                 if(document.getElementById(`volume-${speaker}`))
@@ -151,9 +156,16 @@ let joinStreams = async () => {
         AgoraRTC.createCameraVideoTrack()
     ])
     
+
+    
+    
+    
+    
+    
+    // <div style="z-index: 1;position:absolute;display:flex;align-items:center;flex-direction: column;justify-content: center;height: 5vw;width: 5vw;border-radius:10px;background:${user.bgColor};color:${user.color}">${user.name ? user.name.charAt(0).toUpperCase(): ''}</div>
     //#7 - Create player and add it to player list
-    let player = `<div class="video-containers" id="video-wrapper-${config.uid}">
-                        <p class="user-uid"><img class="volume-icon" id="volume-${config.uid}" src="./assets/volume-on.svg" />${user.name}</p>
+    let player = `<div class="video-containers" id="video-wrapper-${config.uid}" style="display:flex;">
+    <p class="user-uid"><img class="volume-icon" id="volume-${config.uid}" src="./assets/volume-on.svg" />${user.name}</p>
                         <div class="video-player player" id="stream-${config.uid}"></div>
                   </div>`
 
@@ -168,7 +180,7 @@ let joinStreams = async () => {
 }
 
 let handleUserJoined = async (participant, mediaType) => {
-    console.log('Handle participant joined')
+    console.log('Handle user joined')
     //#11 - Add participant to list of remote participants
     remoteTracks[participant.uid] = participant
     console.log(remoteTracks)

@@ -41,6 +41,11 @@ export const FeatureColumn = styled(motion.div)`
 	box-shadow: 0 0 32px 8px #d0d0d0;
 	border-radius: 20px;
 	color: ${({inverse})=> ( inverse ?'#fff' : '')};
+	transition: all 0.5s linear; /* vendorless fallback */
+    -o-transition: all 0.5s linear; /* opera */
+    -ms-transition: all 0.5s linear; /* IE 10 */
+    -moz-transition: all 0.5s linear; /* Firefox */
+    -webkit-transition: all 0.5s linear; /*safari and chrome */
 
 	&:hover {
 		background-color: ${({inverse})=>(inverse ? '#0a2844' : '#e1e1e1b5')};

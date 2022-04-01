@@ -26,9 +26,10 @@ const Footer = () => {
 						<SocialIcon src="./assets/chatterlogo.png" alt="logo" />
 						</FooterLogo>
 						<FooterAddress>
-						20 lilienblum St. Chatterbeak buildings, Tel Aviv
+						{/* 20 lilienblum St. Chatterbeak buildings, Tel Aviv */}
+						Let’s Connect 
 						</FooterAddress>
-						<Row align="center" margin="auto  0 0 0" gap="1rem">
+						<Row justify="center" align="center" margin="auto  0 0 0" gap="1rem">
 							{footerSocialData.map((social, index) => (
 								<FooterSocialIcon
 									key={index}
@@ -54,7 +55,7 @@ const Footer = () => {
 						</FooterLinkItems>
 					))}
 				</FooterGrid>
-				<FooterRights>chatterbeak © 2021</FooterRights>
+				<FooterRights>Chatterbeak © 2013</FooterRights>
 			</FooterWrapper>
 		</Section>
 	);

@@ -11,8 +11,10 @@ const GlobalStyle = createGlobalStyle`
 		border: 4px solid #00237cb8;
 	}
   }
+  a{
+	transition: all 0.4s linear;
   }
-
+  }
   /*scroll bar*/
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -60,6 +62,41 @@ const GlobalStyle = createGlobalStyle`
     opacity: 0;
     transition: opacity 200ms ease-in;
 }
+
+.fa-arrow-down {
+	color: white;
+	font-size: 100px;
+	text-shadow: 3px 0 #016f9154, -3px 0 #016f9154, 0 3px #016f9154, 0 -3px #016f9154, 3px 3px #016f9154, -3px -3px #016f9154, -3px 3px #016f9154, 3px -3px #016f9154;
+  }
+  
+  .arrow {
+	cursor: pointer;
+	text-align: center;
+	position: absolute;
+	right: 10px;
+	top: 80%;
+  }
+  .bounce {
+	-moz-animation: bounce 2s infinite;
+	-webkit-animation: bounce 2s infinite;
+	animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+	0%,
+	20%,
+	50%,
+	80%,
+	100% {
+	  transform: translateY(0);
+	}
+	40% {
+	  transform: translateY(-30px);
+	}
+	60% {
+	  transform: translateY(-15px);
+	}
+  }
 `;
 
 export const Container = styled.div`
@@ -230,12 +267,12 @@ export const LinkButton = styled.a`
 		transition: all 0.4s ease;
 		width: 100%;
 		height: 0%;
-		transform: ${({ contrast }) => (contrast ? 'translate(-50%, -50%) rotate(45deg)' : 'translate(-50%, -50%) rotate(-45deg)')};
+		transform: ${({ contrast }) => (contrast ? 'translate(-50%, -50%) rotate(45deg)' : 'translate(-50%, -50%) rotate(25deg)')};
 
 	}
 
 	&:hover:before {
-		height: 500%;
+		height: 600%;
 	}
 
 	&:hover {
@@ -255,7 +292,16 @@ export const ScrollerDiv = styled.div`
 	right: 15px;
 	width: 56px;
 	height: 56px;
-	display: ${({displayScroller})=>(displayScroller ? '' : 'none' )}; 
+	display: ${({displayScroller})=>(displayScroller ? '' : 'none' )};
+	transition: all 0.5s linear; /* vendorless fallback */
+    -o-transition: all 0.5s linear; /* opera */
+    -ms-transition: all 0.5s linear; /* IE 10 */
+    -moz-transition: all 0.5s linear; /* Firefox */
+    -webkit-transition: all 0.5s linear; /*safari and chrome */
+	&:hover{
+		transition: all 0.5s ease;
+		transform: scale(1.13);
+	} 
 	`;
 	
 	export const ScrollerImg = styled.img`

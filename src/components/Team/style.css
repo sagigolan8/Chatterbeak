@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+}
+
+.container-team-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-team:hover {
+  cursor: pointer;
+}
+
+.container-team img {
+  filter: grayscale();
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 6px solid whitesmoke;
+  box-shadow: 0px 0px 10px 10px rgb(56 125 255 / 20%);
+  margin-bottom: 1rem;
+  transition: filter 0.4s ease-in-out;
+}
+
+.container-team:hover img {
+  filter: none;
+}
+
+.container-team:hover .title {
+  font-size: 3.2rem;
+  text-shadow: 1px 1px 1px #2e2e2e, 1px 2px 1px #016f91, 1px 3px 1px #000000,
+    1px 4px 1px #4e43fa, 1px 5px 1px #016f91, 1px 6px 1px #7c7c7c,
+    1px 5px 1px #030303, 1px 6px 1px #ffffff, 1px 6px 1px #016f91,
+    1px 1px 1px #505050, 1px 1px 1px rgb(16 16 16 / 40%),
+    1px 12px 10px rgb(16 16 16 / 20%), 1px 25px 35px rgb(16 16 16 / 20%),
+    1px 30px 60px rgb(16 16 16 / 40%);
+}
+
+.title {
+  font-family: "Dancing Script", cursive;
+  font-size: 3rem;
+  color: whitesmoke;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.title::after {
+  position: absolute;
+  content: "";
+  width: 0%;
+  height: 4px;
+  /* background-color: whitesmoke; */
+  left: 50%;
+  bottom: -10px;
+  transition: all 0.4s ease-in-out;
+  /* background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    ); */
+
+  box-shadow: 2px 2px 0.5em rgba(98, 73, 122, 0.55),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.75),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.34);
+  /* border: 1px solid #cacaca; */
+  /* background: -moz-linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #caa1de 27%,
+    #dea1ca 30%,
+    #dedede 38%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #caa1de 93%,
+    #dea1ca
+  );
+  background: -webkit-linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #caa1de 27%,
+    #dea1ca 30%,
+    #dedede 38%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #caa1de 93%,
+    #dea1ca
+  );
+  background: -o-linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #caa1de 27%,
+    #dea1ca 30%,
+    #dedede 38%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #caa1de 93%,
+    #dea1ca
+  );
+  background: linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #caa1de 27%,
+    #dea1ca 30%,
+    #dedede 38%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #caa1de 93%,
+    #dea1ca
+  ); */
+
+  background: linear-gradient(
+    -72deg,
+    #dedede,
+    #ffffff 16%,
+    #dedede 21%,
+    #ffffff 24%,
+    #c8c5c5 27%,
+    #dedede 36%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #dedede 72%,
+    #ffffff 80%,
+    #dedede 84%,
+    #a1a1a1
+  );
+
+  /* -webkit-background-clip: text; */
+  -webkit-text-fill-color: transparent;
+}
+
+.container-team:hover .title::after {
+  width: 100%;
+  left: 0;
+}
+
+.our-team {
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(2, 28, 65));
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*gold
+background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+*/

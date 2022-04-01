@@ -25,7 +25,8 @@ export default function Profile() {
     const history = useHistory()
 
   useEffect(()=>{
-      if(user.name){
+    console.log(user)
+      if(document.cookie){
         setAllowEdit({pointerEvents: 'auto'})
       }
       else{
@@ -130,7 +131,13 @@ export default function Profile() {
                       <path d="m3,9v11h14V9M4,9V6c0-3.3 2.7-6 6-6c3.3,0 6,2.7 6,6v3H14V6c0-2.2-1.8-4-4-4-2.2,0-4,1.8-4,4v3"/>
                   </svg>
                 {/* <input  id="meeting-id" type="password" value={user._id} disabled/> */}
-                <input style={allowEdit}  id="meeting-id" type="password" value={`${user.email}`} disabled/>
+                {
+                  user
+                  ?
+                  <input style={allowEdit}  id="meeting-id" type="password" value={` ${user.email}`} disabled/>
+                  :
+                  <input style={allowEdit}  id="meeting-id" type="password" value="" disabled/>
+                }
               
                 <span onClick={()=>showId()} className="eye-wrapper">
               <svg className="eye" viewBox="0 0 41 35">
@@ -170,7 +177,7 @@ export default function Profile() {
 
           <div className="row">
             <div className="left"></div>
-            <DeleteButton  onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
+            <DeleteButton onClick={()=>deleteUser()} className="middle delete-btn">Delete Account</DeleteButton>
             <div className="right edit"></div>
           </div>
         </article>

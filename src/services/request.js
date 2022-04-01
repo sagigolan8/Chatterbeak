@@ -106,3 +106,4 @@ export const checkToken = async (token, path) => { //Check of cookie exist
         console.error(err);
     }
 }
+

@@ -26,8 +26,7 @@ export const data = [
 		to: '/profile',
 	},
 	{
-		text: 'Feedback',
-		to: '/feedback',
+		text: 'Team',
+		to: '/team'
 	},
-
 ];

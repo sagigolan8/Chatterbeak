@@ -33,14 +33,6 @@ const Features = ({featuresData,header,inverse}) => {
 			});
 			return;
 		}
-
-		animation.start({
-			opacity: 0,
-			y: 30,
-			transition: {
-				duration: 0.2,
-			}
-		});
 	}, [inView, animation]);
 
 	const showDescription = (headline,text,icon) =>{

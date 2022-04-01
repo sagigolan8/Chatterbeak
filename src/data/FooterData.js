@@ -1,39 +1,24 @@
 import React from 'react';
-import { FaFacebook, FaInstagram, FaYoutube, FaTwitter, FaLinkedin } from 'react-icons/fa';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 
 const iconStyle = (Icon) => <Icon />;
 
 export const footerSocialData = [
 	{
-		name: 'Facebook',
-		icon: iconStyle(FaFacebook), //=> icon: <FaFacebook />,
-		to: '/'
-	},
-	{
-		name: 'Instagram',
-		icon: iconStyle(FaInstagram),
-		to: '/'
-	},
-	{
-		name: 'YouTube',
-		icon: iconStyle(FaYoutube),
-		to: '/'
-	},
-	{
-		name: 'Twitter',
-		icon: iconStyle(FaTwitter),
-		to: '/'
+		name: 'GitHub',
+		icon: iconStyle(FaGithub), //=> icon: <FaFacebook />,
+		to: 'https://github.com/sagigolan8'
 	},
 	{
 		name: 'LinkedIn',
 		icon: iconStyle(FaLinkedin),
-		to: '/'
+		to: 'https://www.linkedin.com/in/golan-sagi/'
 	},
 	{
 		name: 'Email',
 		icon: iconStyle(MdEmail),
-		to: 'mailto:office@chatterbeak.com'
+		to: 'mailto:sagigolan888@gmail.com'
 	},
 ];
 
@@ -42,16 +27,16 @@ export const footerData = [
 		title: 'Company',
 		links: [
 			{
-				path: 'Our Team',
-				to: '/team'
-			},
-			{
 				path: 'Home',
 				to: '/',
 			},
 			{
 				path: 'Pricing',
 				to: '/pricing'
+			},
+			{
+				path: 'Team',
+				to: '/team'
 			},
 		],
 	},
