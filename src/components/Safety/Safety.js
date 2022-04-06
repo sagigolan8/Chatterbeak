@@ -3,11 +3,11 @@ import { HeroFour } from '../../data/HeroData';
 import { Content } from '../Content/Content';
 import Features from '../Features/Features';
 import { SafetyData } from '../../data/FeaturesData';
-import { Modal } from '@mui/material';
 const Safety = () => {
+
 	useEffect(()=>{
     window.scrollTo({
-      top: window.innerHeight*0.1,
+      top: 0,
       left:0,
       behavior:"smooth",
     })   

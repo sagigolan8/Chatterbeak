@@ -33,7 +33,11 @@ export default function Profile() {
         setAllowEdit({pointerEvents: 'none'})
         infoNotification('In order to get access to our system you have to sign in','top-center')
       }
-      window.scrollTo(0,0)
+      window.scrollTo({
+        top: 0,
+        left:0,
+        behavior:"smooth",
+      }) 
     },[])
 
   const deleteUser = async () =>{

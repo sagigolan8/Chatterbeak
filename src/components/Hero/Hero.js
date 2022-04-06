@@ -8,7 +8,7 @@ const Hero = () => {
 		<HeroSection>
 			<HeroVideo src="./assets/connections.mp4" autoPlay muted loop />
 			<Container>
-				<MainHeading textShadow >Enabling the Hybrid Workforce</MainHeading>
+				<MainHeading textShadow >Enabling The Hybrid Workforce</MainHeading>
 				<HeroText>
 				A collaborative place for customers to find solutions, ask questions, and connect with peers
 				</HeroText>

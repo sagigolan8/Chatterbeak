@@ -14,7 +14,11 @@ import{
 import { TermsData } from '../../data//LegalData'
 export default function Terms() {
     useEffect(()=>{
-		window.scrollTo(0, window.innerHeight*0.1)
+        window.scrollTo({
+            top: window.innerHeight*0.1,
+            left:0,
+            behavior:"smooth",
+          }) 
 	},[])
   return (
       <LegalSection background>

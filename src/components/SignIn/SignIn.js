@@ -15,9 +15,9 @@ import { Container } from '../../globalStyles';
 import { errorNotification, niceAlert } from '../../services/alerts';
 import { UserContext } from '../Context/UserContext';
 import { validateSignIn } from '../../services/request';
+import { useHistory } from 'react-router-dom';
 const SignIn = () => {
     const { user, setUser} = useContext(UserContext) 
-
 	useEffect(()=>{
 		setTimeout(() => {
 			window.scrollTo({
@@ -34,15 +34,14 @@ const SignIn = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const result = await validateSignIn({ email, password });
-
+		console.log(result,'agter sign in')
 		if (result.error) {
 			return errorNotification(result.error,'top-center')
 		}
-		setUser(result)
+		setUser(result?.user)
 		niceAlert('enjoy our services',2000,'success')
 		setEmail('');
 		setPassword('');
-
 	};
 
 	const formData = [

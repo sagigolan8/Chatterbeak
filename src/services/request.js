@@ -3,6 +3,10 @@ import Cookies from 'js-cookie'
 const baseUrl = 'http://localhost:8080'
 // const baseUrl = 'https://chatterbeak.herokuapp.com'
 
+//Temporary - handles cookies problem when cookies is created with localhost but not with heroku 
+const isHeroku = baseUrl.includes('herokuapp') ? true : false 
+
+
 export const validateSignUp = async ({ name, email, password, confirmPass, terms }) => {
 	const { data } = await axios.post(`${baseUrl}/signup`,{
 		name,
@@ -15,12 +19,26 @@ export const validateSignUp = async ({ name, email, password, confirmPass, terms
 }
 
 export const validateSignIn = async ({ email, password })  => {
-	const { data } = await axios.post(`${baseUrl}/signin`,{
-		email,
-		password,
-	},{ withCredentials: true })
-	console.log(data)
-	return data 
+    const { data } = await axios.post(`${baseUrl}/signin`,{
+        email,
+        password,
+    },{ withCredentials: true })
+    try {
+        console.log(data)
+        if(isHeroku){ //heroku not let us create cookie with axios so we need to create it from the client side
+            Cookies.set(data.user._id,data.token,{
+                expires: 1/48 //30
+            })
+            return data.user
+        }
+        else{
+            return data
+        }
+    } catch (err) {
+        console.log(err)
+        return data
+    }
+
 }
 
 export const checkOtp = async (user,otp) => {

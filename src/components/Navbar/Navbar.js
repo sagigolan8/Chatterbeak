@@ -19,6 +19,7 @@ import { data } from '../../data/NavbarData';
 import { UserContext } from '../Context/UserContext.js';
 import { BiLogOut } from 'react-icons/bi';
 import { checkToken, deleteCookie } from '../../services/request.js';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
 	const { user, setUser, initialState } = useContext(UserContext)
@@ -31,7 +32,9 @@ const Navbar = () => {
 	useEffect(() => {
 		const connectUserByToken = async (path=history.location.pathname) => {
 			console.log('check token')
-			const userData = await checkToken(document.cookie,path)
+			const token = user._id ? Cookies.get(user._id) : document.cookie
+			console.log(token)
+			const userData = await checkToken(token,path)//Cookies?.get(user._id)
 			if(userData.verify){
 				return
 			}
@@ -39,12 +42,14 @@ const Navbar = () => {
 				setUser(initialState)
 				return handleLogOut(user._id,'tokenCheck') 
 			}
+			console.log('update user with',userData.user)
 			return setUser(userData)
 		}
 		connectUserByToken()
 
 		history.listen( async () => await connectUserByToken(history.location.pathname));
 
+		console.log(user)
         const onScroll = () => displayNavBackground()
 
         window.addEventListener('scroll', onScroll);

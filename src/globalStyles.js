@@ -217,6 +217,7 @@ export const Button = styled.button`
 	cursor: pointer;
 	overflow: hidden;
 	position: relative;
+	transition: all 0.2s ease;
 
 	&:before {
 		background: #fff;
