@@ -22,6 +22,7 @@ import Verification from './components/Verification/Verification';
 import { UserContext } from './components/Context/UserContext';
 import { ToastContainer } from 'react-toastify';
 import Team from './components/Team/Team';
+import Contact from './components/Contact/Contact';
 
 // import Contact from './components/Contact/Contact'
 
@@ -93,6 +94,7 @@ function App() {
 						<Route location={location} path="/feedback" exact component={Feedback} />
 						<Route location={location} path="/pricing" exact component={Pricing} />
 						<Route location={location} path="/team" exact component={Team} />
+						<Route location={location} path="/contact" exact component={Contact} />
 					</UserContext.Provider>
 				</Switch>
 			</CSSTransition>
