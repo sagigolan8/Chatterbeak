@@ -1,7 +1,7 @@
 import axios from "axios"
 import Cookies from 'js-cookie'
-const baseUrl = 'http://localhost:8080'
-// const baseUrl = 'https://chatterbeak.herokuapp.com'
+// const baseUrl = 'http://localhost:8080'
+const baseUrl = 'https://chatterbeak.herokuapp.com'
 
 //Temporary - handles cookies problem when cookies is created with localhost but not with heroku 
 const isHeroku = baseUrl.includes('herokuapp') ? true : false 

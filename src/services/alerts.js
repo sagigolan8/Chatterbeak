@@ -58,7 +58,7 @@ export const successNotification = (text,position)=>{
 export const infoNotification = (text,position)=>{
   toast.info(text, {
     position,
-    autoClose: 4000,
+    autoClose: 4500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,

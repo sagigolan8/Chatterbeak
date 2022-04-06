@@ -23,6 +23,7 @@ import { UserContext } from './components/Context/UserContext';
 import { ToastContainer } from 'react-toastify';
 import Team from './components/Team/Team';
 import Contact from './components/Contact/Contact';
+import { infoNotification } from './services/alerts';
 
 // import Contact from './components/Contact/Contact'
 

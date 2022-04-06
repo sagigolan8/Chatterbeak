@@ -5,11 +5,16 @@ import Carousel from '../Carousel/Carousel';
 import Hero from '../Hero/Hero';
 import { heroOne, heroTwo, heroThree } from '../../data/HeroData';
 import { WhyUsData } from '../../data/FeaturesData';
+import { FaArrowDown } from 'react-icons/fa';
+import { infoNotification } from '../../services/alerts';
 
 const Home = () => {
 	const [scrollDownArrow, setScrollDownArrow] = useState({display:''})
 
 		useEffect(()=>{
+			if(!localStorage.getItem('firstTime')){
+				infoNotification('First time in Chatterbeak?! welcome! this is temporary link we are about to move to https version','top-center')
+			}
 			window.scrollTo({
 				top: 0,
 				left:0,
@@ -17,7 +22,7 @@ const Home = () => {
 			  })   
 			const onScrollDown = ()=>{
 				if(window.pageYOffset > window.innerHeight*0.5 ){
-					localStorage.setItem('arrow','show')
+					localStorage.setItem('firstTime',true)
 					setScrollDownArrow({opacity:0,transition:'all 0.9s ease-out'})
 					setTimeout(() => {
 						setScrollDownArrow({display:'none'})
@@ -26,7 +31,7 @@ const Home = () => {
 				}
 			}
 				
-			!localStorage.getItem('arrow')
+			!localStorage.getItem('firstTime')
 			?
 			window.addEventListener('scroll',onScrollDown)
 			:
@@ -52,7 +57,8 @@ const Home = () => {
 			<Content {...heroThree} />
 			<Carousel />
 			<div onClick={()=>scrollDown()} style={scrollDownArrow} className="arrow bounce">
-				<p className="fa fa-arrow-down fa-2x" ></p>
+				<p><FaArrowDown className="fa fa-arrow-down fa-2x"/></p>
+				
 			</div>
 		</>
 	);

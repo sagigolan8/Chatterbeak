@@ -244,13 +244,13 @@ return () => {
     <Container>
         <LegalCardSubText>
 
-    <Main className='main-meeting-container'>
+    <Main style={{position:'relative'}} className='main-meeting-container'>
 
         {/* <div id="join-wrapper">
         <input id="username" type="text" placeholder="Enter your name..." />
          <button id="join-btn">Join Stream</button>
         </div> */}
-        <Container id="join-wrapper">
+        <Container style={{position:'absolute',left:'0'}} maxWidth='1000px' id="join-wrapper">
             {/* <FormLabel style={{color:'#afafaf'}}>Create Meeting</FormLabel>
             <FormInput placeholder='Paste here your meeting ID' />
             <FormButton style={{marginBottom:'20px'}}>Create Stream</FormButton> */}
