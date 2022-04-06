@@ -11,6 +11,7 @@ import { getAgoraToken } from '../../services/request'
 import { Main, Container } from '../../globalStyles'
 import { FormButton, FormLabel } from '../Form/FormStyles'
 import { infoNotification } from '../../services/alerts'
+import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash } from 'react-icons/fa'
 
 // stills in progress
 
@@ -269,12 +270,14 @@ return () => {
                        video
                        ?
                        <>
-                       <i id="camera-btn" className="stop fas fa-video-slash"></i>
+                       {/* <i id="camera-btn" className="stop fas fa-video-slash"></i> */}
+                       <FaVideoSlash id="camera-btn" className="stop fas fa-video-slash"/>
                        <span>Play Video</span>
                        </>
                        :
                        <>
-                       <i id="camera-btn" className="fas fa-video"></i>
+                       {/* <i id="camera-btn" className="fas fa-video"></i> */}
+                       <FaVideo id="camera-btn" className="fas fa-video"/>
                        <span>Stop Video</span>
                        </>
                    }
@@ -286,12 +289,12 @@ return () => {
                        audio
                        ?
                        <>
-                       <i id="mic-btn" className="unmute fas fa-microphone-slash"></i>
+                       <FaMicrophoneSlash id="mic-btn" className="unmute fas fa-microphone-slash"/>
                        <span>Unmute</span>
                        </>
                        :
                        <>
-                       <i id="mic-btn" className="fas fa-microphone"></i>
+                       <FaMicrophone id="mic-btn" className="fas fa-microphone"/>
                        <span>Mute</span>
                        </>
                    }
