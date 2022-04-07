@@ -15,8 +15,10 @@ import {
 	PriceLink
 } from './PricingStyles';
 import { pricingData } from '../../data/PricingData';
+import { useHistory } from 'react-router-dom';
 
 function Pricing() {
+	const history = useHistory()
 
 	useEffect(()=>{
 		window.scrollTo({
@@ -59,8 +61,14 @@ function Pricing() {
 											onClick={()=>document.getElementById(card.title).click()}
 										>
 										Get Started
-										</Button> */}
-										<PriceLink id={card.title} href={card.to} target={card.blank}>Get Started</PriceLink>
+										</Button> */} 
+										{/* !!!!!!FIX PAYMENT PROBLEM */}
+										{ card.blank
+										  ?
+										  <PriceLink id={card.title} href={card.to} target={card.blank}>Get Started</PriceLink>
+										  :
+										  <PriceLink id={card.title} onClick={()=>history.push(card.to)} href='#' target={card.blank}>Get Started</PriceLink>
+										}
 										
 								</PricingCardInfo>
 							</PricingCard>

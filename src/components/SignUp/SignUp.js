@@ -114,8 +114,8 @@ const SignUp = () => {
 						<FormConfirmation>
 						<Checkbox style={{color:'#eaeaea'}} onChange={()=>setTerms(termsRef.current.firstChild.checked)} ref={termsRef}/> 
 							I confirm that I have read and accept the 
-							<FormLinks target="_blank" href="/policy"> Privacy Policy</FormLinks>&nbsp;and&nbsp;
-							<FormLinks target="_blank" href="/terms">Terms of Use</FormLinks>.		
+							<FormLinks target="_blank" onClick={()=>history.push('/policy')} href='#' > Privacy Policy</FormLinks>&nbsp;and&nbsp;
+							<FormLinks target="_blank" onClick={()=>history.push('/terms')} href='#' >Terms of Use</FormLinks>.		
 						</FormConfirmation>
 						<Checkbox style={{color:'#eaeaea'}}/>
 						Yes, please keep me updated on Chatterbeak news, events and offers.

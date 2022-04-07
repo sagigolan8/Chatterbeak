@@ -40,7 +40,7 @@ const Navbar = () => {
 			}
 			if(userData.error){// => check all the time except the signup some user
 				setUser(initialState)
-				return handleLogOut(user._id,'tokenCheck') 
+				return handleLogOut(user._id) 
 			}
 			console.log('update user with',userData.user)
 			return setUser(userData)
@@ -53,7 +53,7 @@ const Navbar = () => {
         const onScroll = () => displayNavBackground()
 
         window.addEventListener('scroll', onScroll);
-        
+        console.log(user)
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
@@ -82,12 +82,9 @@ const Navbar = () => {
 		setShow(false);
 	};
 
-	const handleLogOut = (id,tokenCheck='') => {
+	const handleLogOut = (id) => {
 		setUser(initialState)
 		deleteCookie(id)
-		if(!tokenCheck){
-			history.push('/')
-		}
 	}
 
 	return (
@@ -106,7 +103,7 @@ const Navbar = () => {
 					<NavLogo to="/">
 						<NavIcon src="./assets/chatterlogo.png" alt="logo" />
 					</NavLogo> 
-						<NavUser href="/profile">
+						<NavUser onClick={()=>history.push('/profile')} href="#">
 							{
 								user.name ? `🟢 ${user.name}` : ''
 							}

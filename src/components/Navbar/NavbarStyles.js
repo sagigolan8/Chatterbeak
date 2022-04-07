@@ -54,71 +54,71 @@ export const NavLogo = styled(Link)`
 `;
 
 export const NavIcon = styled.img`
-margin-left: -3rem;
-width: 14rem;
-transition: all 0.2s ease;
-&:hover{
-	transition: all 0.4s ease;
-	transform: scale(1.2)	
-}
-@media screen and (max-width: 450px) {
-	width: 10rem;
-}
+	margin-left: -2rem;
+	width: 13rem;
+	transition: all 0.2s ease;
+	&:hover{
+		transition: all 0.4s ease;
+		transform: scale(1.2)	
+	}
+	@media screen and (max-width: 450px) {
+		width: 10rem;
+	}
 `;
 
 export const MobileIcon = styled.div`
-display: none;
-z-index: 50;
+	display: none;
+	z-index: 50;
 
-@media screen and (max-width: 1000px) {
-	display: block;
-	position: absolute;
-	top: 0;
-	right: 0;
-	transform: translate(-100%, 60%);
-	font-size: 1.8rem;
-	cursor: pointer;
-}
+	@media screen and (max-width: 1000px) {
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(-100%, 60%);
+		font-size: 1.8rem;
+		cursor: pointer;
+	}
 `;
 
 export const NavMenu = styled.ul`
-display: flex;
-align-items: center;
-list-style: none;
-text-align: center;
-width: 100%;
-
-
-@media screen and (max-width: 1000px) {
-	flex-direction: column;
+	display: flex;
+	align-items: center;
+	list-style: none;
+	text-align: center;
 	width: 100%;
-	height: 100vh;
-	position: fixed;
-	padding-top: 20%;
-	top: 0;
-	left: 0;
-	opacity: ${({ show }) => (show ? 1 : 0)};
-	visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
-	transform: translateY(${({ show }) => (show ? '0' : '-10px')});
-	transition: opacity 0.5s ease;
-	background-color: #071c2f;
-}
 
-> li:first-child {
-	margin-left: auto;
-}
 
-@media screen and (max-width: 500px) {
-	padding-top: 50%;
-}
+	@media screen and (max-width: 1000px) {
+		flex-direction: column;
+		width: 100%;
+		height: 100vh;
+		position: fixed;
+		padding-top: 20%;
+		top: 0;
+		left: 0;
+		opacity: ${({ show }) => (show ? 1 : 0)};
+		visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+		transform: translateY(${({ show }) => (show ? '0' : '-10px')});
+		transition: opacity 0.5s ease;
+		background-color: #071c2f;
+	}
 
-@media screen and (min-width : 600px) and (max-width : 950px) and (orientation :landscape) {
-	padding-top: 10%;
-}
+	> li:first-child {
+		margin-left: auto;
+	}
+
+	@media screen and (max-width: 500px) {
+		padding-top: 50%;
+	}
+
+	@media screen and (min-width : 600px) and (max-width : 950px) and (orientation :landscape) {
+		padding-top: 10%;
+	}
 `;
 
 export const NavItem = styled.li`
-height: 30px;
+	height: 30px;
 	cursor: pointer;
 	&.active-nav{
 		border-bottom: 2px solid white;
@@ -231,17 +231,17 @@ height: 30px;
 	`;
 
 	export const NavLogOut = styled.div`
-		margin-right: 3rem;
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		align-content: center;
-		> :first-child{
-			&:hover{
-				opacity:0.85;
-				transform: scale(1.25);
-				transition: all 0.4s ease;
-			}
-			transition: all 0.4s linear; /* vendorless fallback */
+	margin-right: 3rem;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-content: center;
+	> :first-child{
+		&:hover{
+			opacity:0.85;
+			transform: scale(1.25);
+			transition: all 0.4s ease;
 		}
+		transition: all 0.4s linear; /* vendorless fallback */
+	}
 	`;

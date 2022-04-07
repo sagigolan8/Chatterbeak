@@ -38,7 +38,7 @@ const SignIn = () => {
 		if (result.error) {
 			return errorNotification(result.error,'top-center')
 		}
-		setUser(result?.user)
+		setUser(result.user)
 		niceAlert('enjoy our services',2000,'success')
 		setEmail('');
 		setPassword('');

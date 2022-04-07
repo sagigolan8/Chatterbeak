@@ -29,7 +29,7 @@ export const validateSignIn = async ({ email, password })  => {
             Cookies.set(data.user._id,data.token,{
                 expires: 1/48 //30
             })
-            return data.user
+            return data
         }
         else{
             return data
